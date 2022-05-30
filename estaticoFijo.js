@@ -1,5 +1,5 @@
 //Diccionario de procesos 
-procesosNombre = [{id: 1, name: "SO", memoria: 1024},
+procesosNombre = [{id: 1, name: "SO", memoria: 1048575},
 {id: 2, name: "Notepad", memoria: 224649},
 {id: 3, name: "Word", memoria: 286708},
 {id: 4, name: "Excel", memoria: 309150},
