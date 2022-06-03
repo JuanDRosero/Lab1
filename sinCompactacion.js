@@ -107,8 +107,8 @@ function insertarProceso(proceso){
         }
         //Calculo de la memoria en hexadecimal 
         if(listaProcesos[i].DirInicialH == null && listaProcesos[i].DirFinalH == null){
-            listaProcesos[i].DirInicialH = decToHex(listaProcesos[i].DirInicial);
-            listaProcesos[i].DirFinalH = decToHex(listaProcesos[i].DirFinal);
+            listaProcesos[i].DirInicialH = "0x"+decToHex(listaProcesos[i].DirInicial);
+            listaProcesos[i].DirFinalH = "0x"+decToHex(listaProcesos[i].DirFinal);
         }
     }
 }
@@ -123,6 +123,23 @@ function eliminarProceso(proceso){
             }
         }
     }
+}
+
+function compactarMemoria(){
+    for(i=listaProcesos.length-1;i>=0;i--){
+        if(i==null){
+            let desplazamiento=listaProcesos[i].Tamanio;    //Obtiene la memoria que hay que dezplazar
+            for(var j=listaProcesos.length-1;j>i;j--){
+                listaProcesos[j].DirInicial-=desplazamiento;
+                listaProcesos[j].DirFinal-=desplazamiento;
+                listaProcesos[j].DirInicialH = "0x"+decToHex(listaProcesos[j].DirInicial);
+                listaProcesos[j].DirFinalH = "0x"+decToHex(listaProcesos[j].DirFinal);
+            }
+            listaProcesos.splice(i,1);  //Elimina el espacio
+            disponible+=desplazamiento;
+        }
+    }
+    console.log("Se termino el proceso de compactación")
 }
 
 insertarProceso([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);

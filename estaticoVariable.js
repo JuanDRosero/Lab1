@@ -1,5 +1,6 @@
 
 //NO OLVIDAR INICIALIZAR EL ARREGLO SEGÚN EL ALGORITMO QUE SE QUIERE USAR
+//Las direcciones son el valor*1024
 
 let Pnombres= new Map();
 let Pmemoria = new Map();
@@ -193,7 +194,7 @@ function Insertar(numeroP){
     let MProceso=Pmemoria.get(numeroP);
     let correcto=false;
     let i=1;
-    while(correcto===false || i<procesos.length){
+    while(correcto===false && i<procesos.length){
         if(procesos[i].Proceso===null){ //Revisa si esta libre
             if(MProceso<=procesos[i].Tamaño){   //Revisa si cabe
                 procesos[i].Proceso=numeroP;
@@ -206,5 +207,20 @@ function Insertar(numeroP){
         alert("No fue posible insertar el elemento debido a que no hay memoria suficiente");
     }
 
+}
+
+function Eliminar(numeroP){
+    let correcto=false;
+    let i=1;
+    while (correcto===false && i<procesos.length ){
+        if(procesos[i].Proceso===numeroP){
+            procesos[i].Proceso=null;
+            correcto=true;
+        }
+        i++;
+    }
+    if(correcto===false){   //No se pudo eliminar
+        alert("No fue posible eliminar el proceso por que no se encntró");
+    }
 }
 
