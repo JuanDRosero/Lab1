@@ -47,99 +47,29 @@ procesosNombre = [
     }
 ];
 
+let disponible = 15728640;
+
 listaProcesos = [
     {
         Proceso : 1,
         Tamanio : 1048575,
-        DirInicial : "0x000000",
-        DirFinal : "0x0FFFFF",
-        memDisponible : 0
-    },
-    {
-        Proceso : null,
-        Tamanio : 262144,
-        DirInicial: "0x100000",
-        DirFinal : "0x13FFFF",
-        memDisponible: null
-    },
-    {
-        Proceso : null,
-        Tamanio : 262144,
-        DirInicial : "0x140000",
-        DirFinal : "0x17FFFF",
-        memDisponible: null
-    },
-    {
-        Proceso : null,
-        Tamanio : 524288,
-        DirInicial : "0x180000",
-        DirFinal : "0x1FFFFF",
-        memDisponible: null
-    },
-    {
-        Proceso : null,
-        Tamanio : 524288,
-        DirInicial : "0x200000",
-        DirFinal : "0x27FFFF",
-        memDisponible: null
-    },
-    {
-        Proceso : null,
-        Tamanio : 524288,
-        DirInicial : "0x280000",
-        DirFinal : "0x2FFFFF",
-        memDisponible: null
-    },
-    {
-        Proceso : null,
-        Tamanio : 1048575,
-        DirInicial : "0x300000",
-        DirFinal : "0x3FFFFF",
-        memDisponible: null
-    },
-    {
-        Proceso : null,
-        Tamanio : 1048575,
-        DirInicial : "0x400000",
-        DirFinal : "0x4FFFFF",
-        memDisponible: null
-    },
-    {
-        Proceso : null,
-        Tamanio : 1048575,
-        DirInicial : "0x500000",
-        DirFinal : "0x5FFFFF",
-        memDisponible: null
-    },
-    {
-        Proceso : null,
-        Tamanio : 2097150,
-        DirInicial : "0x600000",
-        DirFinal : "0x7FFFFF",
-        memDisponible: null
-    },
-    {
-        Proceso : null,
-        Tamanio : 4194300,
-        DirInicial : "0x800000",
-        DirFinal : "0xBFFFFF",
-        memDisponible: null
-    },
-    {
-        Proceso : null,
-        Tamanio : 4194300,
-        DirInicial : "0xC00000",
-        DirFinal : "0xFFFFFF",
-        memDisponible: null
+        DirInicial : 0, 
+        DirFinal : 1048576,
+        DirInicialH : "00000",
+        DirFinalH : "0ffff"
     }
 ];
 
-//Funcion para agregar n procesos a la memoria 
-function insertar(procesos){
-    var processToInsert = [];
-    for(var i = 0; i < procesos.length; i++){
+function decToHex(num){
+    return num.toString(16);
+}
+
+function retornarProceso(idProceso){
+    //Esta funcion retorna el objeto completo para obtener los datos necesarios en la interfaz
+    let processToInsert = [];
+    for(var i = 0; i < idProceso.length; i++){
         for(var j = 0; j < procesosNombre.length; j++){
-            if(procesosNombre[j].id == procesos[i]){
+            if(procesosNombre[j].id == idProceso[i]){
                 processToInsert.push(procesosNombre[j]);
             }
         }
@@ -147,71 +77,56 @@ function insertar(procesos){
     return processToInsert;
 }
 
-//Algoritmo del primer ajuste
-function insertarPrimerAjuste(proceso){
-    for(var i = 0; i < proceso.length; i++){
-        for(var j = 0; j < listaProcesos.length; j++){
-            if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio >= proceso[i].memoria){
-                listaProcesos[j].Proceso = proceso[i].id;
-                listaProcesos[j].memDisponible = listaProcesos[j].Tamanio - proceso[i].memoria;
-                j = listaProcesos.length;
-                console.log("Se inserto el proceso.")
-            }
+function insertarProceso(proceso){
+    
+    //Objeto de procesos 
+    var objetos = retornarProceso(proceso);    
+    for(var i = 0; i < objetos.length; i++){
+        disponible -= objetos[i].memoria;
+        if(disponible > 0 && disponible > objetos[i].memoria){
+            listaProcesos.push({
+                Proceso: objetos[i].id,
+                Tamanio: objetos[i].memoria,
+                DirInicial: null,
+                DirFinal: null,
+                DirInicialH : null,
+                DirFinalH : null
+            });
+            console.log("Disponible: " + disponible);
+        }else{
+            i = objetos.length;
+            console.log("No se pueden agregar más procesos, memoria insuficiente");
         }
     }
-    return listaProcesos;
-}
-
-//Algoritmo peor ajuste 
-function insertarPeorAjuste(proceso){
-    for(var i = 0; i < proceso.length; i++){
-        for(var j = listaProcesos.length - 1; j >= 0; j--){
-            if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio >= proceso[i].memoria){
-                listaProcesos[j].Proceso = proceso[i].id;
-                listaProcesos[j].memDisponible = listaProcesos[j].Tamanio - proceso[i].memoria;
-                j = -1;
-                console.log("Se inserto el proceso.")
-            }
+    //Se inicia en 1 ya que el SO es la posicion 0
+    for(var i = 1; i < listaProcesos.length; i++){
+        //Calculo de la memoria en decimal 
+        if(listaProcesos[i].DirInicial == null && listaProcesos[i].DirFinal == null){
+            listaProcesos[i].DirInicial = listaProcesos[i - 1].DirFinal + 1;
+            listaProcesos[i].DirFinal = listaProcesos[i].DirInicial + listaProcesos[i].Tamanio;
+        }
+        //Calculo de la memoria en hexadecimal 
+        if(listaProcesos[i].DirInicialH == null && listaProcesos[i].DirFinalH == null){
+            listaProcesos[i].DirInicialH = decToHex(listaProcesos[i].DirInicial);
+            listaProcesos[i].DirFinalH = decToHex(listaProcesos[i].DirFinal);
         }
     }
-    return listaProcesos;
 }
 
 function eliminarProceso(proceso){
     for(var i = 0; i < proceso.length; i++){
         for(var j = 0; j < listaProcesos.length; j++){
-            if(listaProcesos[j].Proceso == proceso[i].id){
+            if(listaProcesos[j].Proceso == proceso[i]){
                 listaProcesos[j].Proceso = null;
-                listaProcesos[j].memDisponible = null;
-                j = listaProcesos.length;
-                console.log("Se elimino el proceso.")
+            }else{
+                console.log("No se encontro el proceso especificado");
             }
         }
     }
-    return listaProcesos;
 }
 
-//Función para revisar el espacio de memoria sobrante 
-function memoriaSobrante(procesos){
-    var memoriaDisponible = 15728640;
-    for(var i = 0; i < listaProcesos.length; i++){
-        if(listaProcesos[i].memDisponible != null){
-            memoriaDisponible -= listaProcesos[i].memDisponible;
-        }
-    }
-    return memoriaDisponible;
-}
-/*
-console.log("Memoria disponible inicial: ");
-console.log(memoriaSobrante(listaProcesos));
-console.log("Insertar los procesos: ")
-insertarPrimerAjuste(insertar([2,8,5,3]));
+insertarProceso([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
+console.log(listaProcesos);
+//console.log(decToHex(1048577));
+//eliminarProceso([3,4]);
 //console.log(listaProcesos);
-console.log("Memoria disponible despues de insertar procesos: ");
-console.log(memoriaSobrante(listaProcesos));*/
-/*
-console.log("Peor ajuste");
-insertarPeorAjuste(insertar([2,8,5,3]));
-//console.log(listaProcesos);
-console.log(memoriaSobrante(listaProcesos));
-console.log(listaProcesos)*/
