@@ -126,24 +126,33 @@ function eliminarProceso(proceso){
 }
 
 function compactarMemoria(){
-    for(i=listaProcesos.length-1;i>=0;i--){
-        if(i==null){
-            let desplazamiento=listaProcesos[i].Tamanio;    //Obtiene la memoria que hay que dezplazar
-            for(var j=listaProcesos.length-1;j>i;j--){
-                listaProcesos[j].DirInicial-=desplazamiento;
-                listaProcesos[j].DirFinal-=desplazamiento;
+    for(var x = listaProcesos.length-1; x >=0; x--){
+        if(listaProcesos[x].Proceso==null){    
+            let desplazamiento=listaProcesos[x].Tamanio;    //Obtiene la memoria que hay que dezplazar
+            for(var j=listaProcesos.length-1;j>x;j--){
+                listaProcesos[j].DirInicial-=(desplazamiento+1);
+                listaProcesos[j].DirFinal-=(desplazamiento+1);
                 listaProcesos[j].DirInicialH = "0x"+decToHex(listaProcesos[j].DirInicial);
                 listaProcesos[j].DirFinalH = "0x"+decToHex(listaProcesos[j].DirFinal);
             }
-            listaProcesos.splice(i,1);  //Elimina el espacio
+            listaProcesos.splice(x,1);  //Elimina el espacio
             disponible+=desplazamiento;
         }
     }
     console.log("Se termino el proceso de compactación")
 }
 
-insertarProceso([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
-console.log(listaProcesos);
-//console.log(decToHex(1048577));
-//eliminarProceso([3,4]);
+//insertarProceso([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
+/*
+insertarProceso([2,2,4,6,4,2]);
+
 //console.log(listaProcesos);
+
+console.log("---------------------------");
+eliminarProceso([4]);
+console.log(listaProcesos);
+console.log("-------------COMPACTANDO MEMORIA WE--------------");
+
+compactarMemoria();
+console.log(listaProcesos);
+*/

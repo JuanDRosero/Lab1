@@ -2,29 +2,15 @@
 //NO OLVIDAR INICIALIZAR EL ARREGLO SEGÚN EL ALGORITMO QUE SE QUIERE USAR
 //Las direcciones son el valor*1024
 
-let Pnombres= new Map();
-let Pmemoria = new Map();
-//Diccionario de Nombres
-Pnombre.set(1,"Sistema Operativo");
-Pnombre.set(2,"Notepad");
-Pnombre.set(3,"Word");
-Pnombre.set(4,"Excel");
-Pnombre.set(5,"AutoCAD");
-Pnombre.set(6,"Calculadora");
-Pnombre.set(7,"Windows Defender");
-Pnombre.set(8,"PowerPoint");
-Pnombre.set(9,"Chrome");
-
-//Diccionario de memoria a usar (En kib)
-Pmemoria.set(1,1024)
-Pmemoria.set(2,219.38);
-Pmemoria.set(3,279.99);
-Pmemoria.set(4,301.90);
-Pmemoria.set(5,425.98);
-Pmemoria.set(6,204.95);
-Pmemoria.set(7,3902.94);
-Pmemoria.set(8,1743.76);
-Pmemoria.set(9,2633.41);
+let procesosNombre = [{id: 1, name: "SO", memoria: 1048575},
+{id: 2, name: "Notepad", memoria: 224649},
+{id: 3, name: "Word", memoria: 286708},
+{id: 4, name: "Excel", memoria: 309150},
+{id: 5, name: "AutoCAD", memoria: 436201},
+{id: 6, name: "Calculadora", memoria: 209462},
+{id: 7, name: "Windows Defender", memoria: 3996608},
+{id: 8, name: "PowerPoint", memoria: 1785608},
+{id: 9, name: "Chrome", memoria: 2696608}];
 
 //variable que representa la RAM
 let procesos=[];
@@ -35,73 +21,73 @@ function IniciarMejor(){
     [
         {
             "Proceso":1,
-            "Tamaño":1024,
+            "Tamaño":1048576,
             "DirIn":"0x000000",
             "DirFin":"0x0FFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":256,
+            "Tamaño":268288,
             "DirIn":"0x100000",
             "DirFin":"0x13FFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":256,
+            "Tamaño":268288,
             "DirIn":"0x140000",
             "DirFin":"0x17FFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":512,
+            "Tamaño":536576,
             "DirIn":"0x180000",
             "DirFin":"0x1FFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":512,
+            "Tamaño":536576,
             "DirIn":"0x200000",
             "DirFin":"0x27FFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":512,
+            "Tamaño":536576,
             "DirIn":"0x280000",
             "DirFin":"0x2FFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":1024,
+            "Tamaño":1048576,
             "DirIn":"0x300000",
             "DirFin":"0x3FFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":1024,
+            "Tamaño":1048576,
             "DirIn":"0x400000",
             "DirFin":"0x4FFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":1024,
+            "Tamaño":1048576,
             "DirIn":"0x500000",
             "DirFin":"0x5FFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":2048,
+            "Tamaño":2097152,
             "DirIn":"0x600000",
             "DirFin":"0x7FFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":4096,
+            "Tamaño":4194304,
             "DirIn":"0x800000",
             "DirFin":"0xBFFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":4096,
+            "Tamaño":4194304,
             "DirIn":"0xC00000",
             "DirFin":"0xFFFFFF"
         },
@@ -116,73 +102,73 @@ function IniciarPeor(){
     [
         {
             "Proceso":1,
-            "Tamaño":1024,
+            "Tamaño":1048576,
             "DirIn":"0x000000",
             "DirFin":"0x0FFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":4096,
+            "Tamaño":4194304,
             "DirIn":"0x100000",
             "DirFin":"0x4FFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":4096,
+            "Tamaño":4194304,
             "DirIn":"0x500000",
             "DirFin":"0x8FFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":2048,
+            "Tamaño":2097152,
             "DirIn":"0x900000",
             "DirFin":"0xAFFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":1024,
+            "Tamaño":1048576,
             "DirIn":"0xB00000",
             "DirFin":"0xBFFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":1024,
+            "Tamaño":1048576,
             "DirIn":"0xC00000",
             "DirFin":"0xCFFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":1024,
+            "Tamaño":1048576,
             "DirIn":"0xD00000",
             "DirFin":"0xDFFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":512,
+            "Tamaño":536576,
             "DirIn":"0xE0000",
             "DirFin":"0xE7FFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":512,
+            "Tamaño":536576,
             "DirIn":"0xE80000",
             "DirFin":"0xEFFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":512,
+            "Tamaño":536576,
             "DirIn":"0xF00000",
             "DirFin":"0xF7FFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":256,
+            "Tamaño":268288,
             "DirIn":"0xF80000",
             "DirFin":"0xFBFFFF"
         },
         {
             "Proceso":null,
-            "Tamaño":256,
+            "Tamaño":268288,
             "DirIn":"0xFC0000",
             "DirFin":"0xFFFFFF"
         },
@@ -191,7 +177,9 @@ function IniciarPeor(){
 
 function Insertar(numeroP){
     //hay que revisar primero si está iniciada la memoria en el mejor proceso o peor proceso respectivamente
-    let MProceso=Pmemoria.get(numeroP);
+    let MProceso=procesosNombre.find(function (element){
+        return element.id==numeroP;
+    }).memoria;
     let correcto=false;
     let i=1;
     while(correcto===false && i<procesos.length){
@@ -204,7 +192,7 @@ function Insertar(numeroP){
         i++;    //Aumenta
     }
     if(correcto===false){   //No se pudo insertar
-        alert("No fue posible insertar el elemento debido a que no hay memoria suficiente");
+        console.log("No fue posible insertar el elemento debido a que no hay memoria suficiente");
     }
 
 }
@@ -220,7 +208,21 @@ function Eliminar(numeroP){
         i++;
     }
     if(correcto===false){   //No se pudo eliminar
-        alert("No fue posible eliminar el proceso por que no se encntró");
+        console.log("No fue posible eliminar el proceso por que no se encntró");
     }
 }
+/*
+IniciarMejor();
+Insertar(2);
+console.log("Se inserto 2");
+Insertar(4);
+console.log("Se inserto 4");
+Insertar(8);
+console.log("Se inserto 8");
+console.log(procesos);
+console.log("--------------------------------------")
+Eliminar(3);
+Eliminar(4);
+console.log(procesos);
+*/
 
