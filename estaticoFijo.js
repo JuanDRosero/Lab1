@@ -1,13 +1,51 @@
 //Diccionario de procesos 
-procesosNombre = [{id: 1, name: "SO", memoria: 1048575},
-{id: 2, name: "Notepad", memoria: 224649},
-{id: 3, name: "Word", memoria: 286708},
-{id: 4, name: "Excel", memoria: 309150},
-{id: 5, name: "AutoCAD", memoria: 436201},
-{id: 6, name: "Calculadora", memoria: 209462},
-{id: 7, name: "Windows Defender", memoria: 3996608},
-{id: 8, name: "PowerPoint", memoria: 1785608},
-{id: 9, name: "Chrome", memoria: 2696608}];
+procesosNombre = [
+    {
+        id: 1, 
+        name: "SO",
+        memoria: 1048575
+    },
+    {
+        id: 2, 
+        name: "Notepad", 
+        memoria: 224649
+    },
+    {
+        id: 3, 
+        name: "Word", 
+        memoria: 286708
+    },
+    {
+        id: 4, 
+        name: "Excel", 
+        memoria: 309150
+    },
+    {
+        id: 5, 
+        name: "AutoCAD", 
+        memoria: 436201
+    },
+    {
+        id: 6, 
+        name: "Calculadora", 
+        memoria: 209462
+    },
+    {
+        id: 7, 
+        name: "Windows Defender", 
+        memoria: 3996608
+    },
+    {
+        id: 8, 
+        name: "PowerPoint", 
+        memoria: 1785608
+    },
+    {
+        id: 9, 
+        name: "Chrome", 
+        memoria: 2696608
+    }
+];
 
 listaProcesos = [
     {
@@ -110,15 +148,15 @@ listaProcesos = [
 
 function retornarProceso(idProceso){
     //Esta funcion retorna el objeto completo para obtener los datos necesarios en la interfaz
-    let procesToInsert = [];
+    let processToInsert = [];
     for(var i = 0; i < idProceso.length; i++){
         for(var j = 0; j < procesosNombre.length; j++){
             if(procesosNombre[j].id == idProceso[i]){
-                procesToInsert.push(procesosNombre[j]);
+                processToInsert.push(procesosNombre[j]);
             }
         }
     }
-    return procesToInsert;
+    return processToInsert;
 }
 
 //Esta funcion hara de algoritmo de primera opcion
@@ -129,6 +167,19 @@ function insertarProceso(proceso){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = listaProcesos.length;
                 console.log('Se insertó el proceso');
+            }
+        }
+    }
+    return listaProcesos;
+}
+
+function eliminarProceso(proceso){
+    for(var i = 0; i < proceso.length; i++){
+        for(var j = 0; j < listaProcesos.length; j++){
+            if(listaProcesos[j].Proceso != null){
+                listaProcesos[j].Proceso = null;
+                j = listaProcesos.length;
+                console.log('Se elimino el proceso');
             }
         }
     }
