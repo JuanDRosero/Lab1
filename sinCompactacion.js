@@ -113,6 +113,45 @@ function insertarProceso(proceso){
     }
 }
 
+function insertarPrimerAjuste(proceso){
+    for(var i = 0; i < proceso.length; i++){
+        for(var j = 0; j < listaProcesos.length; j++){
+            if(listaProcesos[j].Proceso == null && proceso[i].memoria < listaProcesos[j].Tamanio){
+                listaProcesos[j].Proceso = proceso[i].id;
+                j = listaProcesos.length;
+                console.log("Se inserto el proceso");
+            }
+        }
+    }
+    return listaProcesos;
+}
+
+function insertarPeorAjuste(proceso){
+    for(var i = 0; i < proceso.length; i++){
+        for(var j = listaProcesos.length; j > 0; j--){
+            if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio > proceso[i].memoria){
+                listaProcesos[j].Proceso = proceso[i].id;
+                j = 0;
+                console.log("Se inserto el proceso");
+            }
+        }
+    }
+    return listaProcesos;
+}
+
+function insertarMejorAjuste(proceso){
+    for(var i = 0; i < proceso.length; i++){
+        for(var j = 0; j < listaProcesos.length; j++){
+            if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio == proceso[i].memoria){
+                listaProcesos[j].Proceso = proceso[i].id;
+                j = listaProcesos.length;
+                console.log("Se inserto el proceso");
+            }
+        }
+    }
+    return listaProcesos;
+}
+
 function eliminarProceso(proceso){
     for(var i = 0; i < proceso.length; i++){
         for(var j = 0; j < listaProcesos.length; j++){
