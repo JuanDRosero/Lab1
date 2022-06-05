@@ -176,7 +176,7 @@ function insertarProceso(proceso){
 function eliminarProceso(proceso){
     for(var i = 0; i < proceso.length; i++){
         for(var j = 0; j < listaProcesos.length; j++){
-            if(listaProcesos[j].Proceso != null){
+            if(listaProcesos[j].Proceso != null && listaProcesos[j].Proceso == proceso[i]){
                 listaProcesos[j].Proceso = null;
                 j = listaProcesos.length;
                 console.log('Se elimino el proceso');
