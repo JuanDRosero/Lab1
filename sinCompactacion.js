@@ -118,6 +118,7 @@ function eliminarProceso(proceso){
         for(var j = 0; j < listaProcesos.length; j++){
             if(listaProcesos[j].Proceso == proceso[i]){
                 listaProcesos[j].Proceso = null;
+                disponible += listaProcesos[j].Tamanio;
             }else{
                 console.log("No se encontro el proceso especificado");
             }
