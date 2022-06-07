@@ -123,14 +123,17 @@ function insertarMemoria(proceso){
         case "1":
             while(insertado == false && i < listaProcesos.length - 1){
                 insertarMejorAjuste(proceso);
+                insertado = true;
             }
         case "2":
             while(insertado == false && i < listaProcesos.length - 1){
                 insertarPeorAjuste(proceso);
+                insertado = true;
             }
         case "3":
             while(insertado == false && i < listaProcesos.length - 1){
                 insertarMejorAjuste(proceso);
+                insertado = true;
             }
     }
 }
