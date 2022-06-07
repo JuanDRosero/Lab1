@@ -95,7 +95,7 @@ function insertarProceso(proceso){
             console.log("Disponible: " + disponible);
         }else{
             i = objetos.length;
-            console.log("No se pueden agregar más procesos, memoria insuficiente");
+            alert("No se pueden agregar más procesos, memoria insuficiente");
         }
     }
     //Se inicia en 1 ya que el SO es la posicion 0
@@ -119,7 +119,7 @@ function insertarPrimerAjuste(proceso){
             if(listaProcesos[j].Proceso == null && proceso[i].memoria < listaProcesos[j].Tamanio){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = listaProcesos.length;
-                console.log("Se inserto el proceso");
+                alert("Se inserto el proceso, con primer ajuste");
             }
         }
     }
@@ -132,7 +132,7 @@ function insertarPeorAjuste(proceso){
             if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio > proceso[i].memoria){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = 0;
-                console.log("Se inserto el proceso");
+                alert("Se inserto el proceso, con peor ajuste");
             }
         }
     }
@@ -145,7 +145,7 @@ function insertarMejorAjuste(proceso){
             if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio == proceso[i].memoria){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = listaProcesos.length;
-                console.log("Se inserto el proceso");
+                alert("Se inserto el proceso, con mejor ajuste");
             }
         }
     }
@@ -159,6 +159,7 @@ function eliminarProceso(proceso){
                 listaProcesos[j].Proceso = null;
                 disponible += listaProcesos[j].Tamanio;
                 j = listaProcesos.length;
+                alert("Se elimino el proceso");
             }
         }
     }
@@ -178,7 +179,7 @@ function compactarMemoria(){
             disponible+=desplazamiento;
         }
     }
-    console.log("Se termino el proceso de compactación")
+    alert("Se termino el proceso de compactación")
 }
 
 //insertarProceso([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
