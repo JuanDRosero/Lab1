@@ -194,7 +194,8 @@ function Insertar(numeroP){
     if(correcto===false){   //No se pudo insertar
         console.log("No fue posible insertar el elemento debido a que no hay memoria suficiente");
     }
-
+    console.log(procesos);
+    pintado();
 }
 
 function Eliminar(numeroP){
@@ -211,6 +212,31 @@ function Eliminar(numeroP){
         console.log("No fue posible eliminar el proceso por que no se encntró");
     }
 }
+
+function pintado(){
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.strokeStyle = "#f212aa";
+    ctx.stroke();
+    // ctx.strokeRect(0,0,300,200);
+    // ctx.strokeRect(0,0,300,200);
+    let inicio=0;
+    for (let i = 0; i < procesos.length; i++) {
+        ctx.strokeRect(0,inicio,300,(procesos[i].Tamaño)*(700/(16*1048576)));
+
+        if(procesos[i].Proceso != null){
+            let MProceso=procesosNombre.find(function (element){
+                return element.id==procesos[i].Proceso;
+            }).memoria;
+            ctx.fillRect(0, inicio, 300, (MProceso*(procesos[i].Tamaño)*(700/(16*1048576)))/procesos[i].Tamaño);
+        }
+
+        // ctx.fillRect(10, (listaProcesos[i].Tamanio/(1048575*16))*700, 100, 100);
+        inicio+=(procesos[i].Tamaño)*(700/(16*1048576))   
+    }
+}
+IniciarMejor();
+
 /*
 IniciarMejor();
 Insertar(2);
