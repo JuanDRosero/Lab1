@@ -12,20 +12,10 @@
     <ul>
         <li><a href="estaticoFijo.html">Estático Fijo</a></li>
         <li><a href="estaticoVariable.html">Estático Variable</a></li>
-        <li><a href="dinamico.html">Sin compactación</a></li>
-        <li><a href="dinamico.html">Con compactación</a></li>
+        <li><a href="dinamico.html">Dinámico</a></li>
       </ul>
     <div class="general">
         <div class="tituloGen">Laboratorio #1 - Sistemas Operativos</div>
-        <!-- <div class="eleccion">
-            <div>Programas disponibles:</div>
-            <select id="tbl1">
-                <option value="1">Particiones estáticas fijas</option>
-                <option value="2">Particiones estáticas variables</option>
-                <option value="3">Particiones dinámicas sin compactación</option>
-                <option value="4">Particiones dinámicas con compactación</option>
-            </select>
-        </div> -->
         <div class="eleccion">
             <div>Algoritmos de asignación:</div>
             <select id="tbl2">
@@ -97,13 +87,15 @@
                     <button name="button2" onclick="eliminarProceso([9])">Eliminar</button></td>
             </tr>
         </table>
-        <table class="procesosEjec">
+        <table class="procesosEjec" id="procEjec">
             <tr>
                 <th>Item</th>
                 <th>Nombre Proceso</th>
                 <th>Tamaño</th>
-                <th>Posición</th>
+                <th>Dirección inicial partición</th>
+                <th>Dirección final partición</th>
             </tr>
+            
         </table>
     </div>
 </body>

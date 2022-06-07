@@ -174,11 +174,27 @@ function insertarProceso(proceso){
             }
         }
     }
+    actualizarTabla();
     pintado();
     console.log(listaProcesos);
     return listaProcesos;
 }
 
+function actualizarTabla(){
+    var todo = "<tr><th>Item</th><th>Nombre Proceso</th><th>Tamaño</th><th>Dirección inicial partición</th><th>Dirección final partición</th></tr>"
+    const lista = document.getElementById("procEjec");
+    lista.innerHTML = todo;
+
+    for (var i = 0; i < listaProcesos.length; i++) {
+        if(listaProcesos[i].Proceso != null){
+            var proceso = procesosNombre.find(function (element){
+                return element.id==listaProcesos[i].Proceso;
+            });
+            lista.innerHTML += "<tr><td>"+proceso.id+"</td><td>"+proceso.name+"</td><td>"+proceso.memoria+"</td><td>"+listaProcesos[i].DirInicial+"</td><td>"+listaProcesos[i].DirFinal+"</td></tr>"    
+        }
+        
+    }  
+}
 function eliminarProceso(proceso){
 
     // const ctx = canvas.getContext('2d');
@@ -196,6 +212,7 @@ function eliminarProceso(proceso){
             }
         }
     }
+    actualizarTabla();
     pintado();
     console.log(listaProcesos);
     return listaProcesos;
@@ -204,6 +221,7 @@ function eliminarProceso(proceso){
 function pintado(){
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "green";
     ctx.clearRect(0, 0, 300, 700);
     // ctx.strokeRect(0,0,300,200);
     // ctx.strokeRect(0,0,300,200);

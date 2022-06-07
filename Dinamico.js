@@ -112,6 +112,7 @@ function insertarProceso(proceso){
             listaProcesos[i].DirFinalH = "0x"+decToHex(listaProcesos[i].DirFinal);
         }
     }
+    actualizarTabla()
     pintado();
 }
 
@@ -164,6 +165,8 @@ function eliminarProceso(proceso){
             }
         }
     }
+    actualizarTabla()
+    actualizarTabla();
     pintado();
 }
 
@@ -209,6 +212,22 @@ function pintado(){
         inicio+=(listaProcesos[i].Tamanio)*(700/(16*1048576))   
     }
     console.log(listaProcesos);
+}
+
+function actualizarTabla(){
+    var todo = "<tr><th>Item</th><th>Nombre Proceso</th><th>Tamaño</th><th>Dirección inicial partición</th><th>Dirección final partición</th></tr>"
+    const lista = document.getElementById("procEjec");
+    lista.innerHTML = todo;
+
+    for (var i = 0; i < listaProcesos.length; i++) {
+        if(listaProcesos[i].Proceso != null){
+            var proceso = procesosNombre.find(function (element){
+                return element.id==listaProcesos[i].Proceso;
+            });
+            lista.innerHTML += "<tr><td>"+proceso.id+"</td><td>"+proceso.name+"</td><td>"+proceso.memoria+"</td><td>"+listaProcesos[i].DirInicial+"</td><td>"+listaProcesos[i].DirFinal+"</td></tr>"    
+        }
+        
+    }  
 }
 
 //insertarProceso([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);

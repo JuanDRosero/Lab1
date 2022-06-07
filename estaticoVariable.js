@@ -195,6 +195,7 @@ function Insertar(numeroP){
         alert("No fue posible insertar el elemento debido a que no hay memoria suficiente");
     }
     console.log(procesos);
+    actualizarTabla()
     pintado();
 }
 
@@ -211,12 +212,14 @@ function Eliminar(numeroP){
     if(correcto===false){   //No se pudo eliminar
         alert("No fue posible eliminar el proceso por que no se encontró");
     }
+    actualizarTabla()
     pintado();
 }
 
 function pintado(){
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "green";
     ctx.clearRect(0, 0, 300, 700);
     // ctx.strokeRect(0,0,300,200);
     // ctx.strokeRect(0,0,300,200);
@@ -234,6 +237,22 @@ function pintado(){
         // ctx.fillRect(10, (listaProcesos[i].Tamanio/(1048575*16))*700, 100, 100);
         inicio+=(procesos[i].Tamaño)*(700/(16*1048576))   
     }
+}
+
+function actualizarTabla(){
+    var todo = "<tr><th>Item</th><th>Nombre Proceso</th><th>Tamaño</th><th>Dirección inicial partición</th><th>Dirección final partición</th></tr>"
+    const lista = document.getElementById("procEjec");
+    lista.innerHTML = todo;
+
+    for (var i = 0; i < procesos.length; i++) {
+        if(procesos[i].Proceso != null){
+            var proceso = procesosNombre.find(function (element){
+                return element.id==procesos[i].Proceso;
+            });
+            lista.innerHTML += "<tr><td>"+proceso.id+"</td><td>"+proceso.name+"</td><td>"+proceso.memoria+"</td><td>"+procesos[i].DirIn+"</td><td>"+procesos[i].DirFin+"</td></tr>"    
+        }
+        
+    }  
 }
 IniciarMejor();
 
