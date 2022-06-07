@@ -52,97 +52,97 @@ procesosNombre = [
 listaProcesos = [
     {
         Proceso : 1,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0x000000",
         DirFinal : "0x0FFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial: "0x100000",
         DirFinal : "0x1FFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0x200000",
         DirFinal : "0x2FFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0x300000",
         DirFinal : "0x3FFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0x400000",
         DirFinal : "0x4FFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0x500000",
         DirFinal : "0x5FFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0x600000",
         DirFinal : "0x6FFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0x700000",
         DirFinal : "0x7FFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0x800000",
         DirFinal : "0x8FFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0x900000",
         DirFinal : "0x9FFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0xA00000",
         DirFinal : "0xAFFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0xB00000",
         DirFinal : "0xBFFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0xC00000",
         DirFinal : "0xCFFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0xD00000",
         DirFinal : "0xDFFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0xE00000",
         DirFinal : "0xEFFFFF"
     },
     {
         Proceso : null,
-        Tamanio : 1048575,
+        Tamanio : 1048576,
         DirInicial : "0xF00000",
         DirFinal : "0xFFFFFF"
     }
@@ -170,6 +170,7 @@ function insertarProceso(proceso){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = listaProcesos.length;
                 alert('Se insertó el proceso');
+
             }
         }
     }
@@ -180,52 +181,45 @@ function insertarProceso(proceso){
 
 function eliminarProceso(proceso){
 
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(10, 10, 100, 100);
+    // const ctx = canvas.getContext('2d');
+    // ctx.clearRect(10, 10, 100, 100);
 
     for(var i = 0; i < proceso.length; i++){
         for(var j = 0; j < listaProcesos.length; j++){
             if(listaProcesos[j].Proceso != null && listaProcesos[j].Proceso == proceso[i]){
                 listaProcesos[j].Proceso = null;
                 j = listaProcesos.length;
-                alert('Se elimino el proceso');
+                alert('Se eliminó el proceso');
             }
         }
     }
+    pintado();
+    console.log(listaProcesos);
     return listaProcesos;
-}
-
-function pru(){
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
-    ctx.fillStyle = "green";
-    ctx.fillRect(10, 10, 100, 100);
-    ctx.strokeRect(0,0,300,200);
 }
 
 function pintado(){
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
-    ctx.strokeStyle = "#f212aa";
-    ctx.stroke();
+    ctx.clearRect(0, 0, 300, 700);
     // ctx.strokeRect(0,0,300,200);
     // ctx.strokeRect(0,0,300,200);
-
+    
 
     for (let i = 0; i < listaProcesos.length; i++) {
-        ctx.strokeRect(0,(1048575*i/(1048575*16))*700,300,700/16);
+        ctx.strokeRect(0,(1048576*i/(1048576*16))*700,300,700/16);
 
         if(listaProcesos[i].Proceso != null){
             let MProceso=procesosNombre.find(function (element){
                 return element.id==listaProcesos[i].Proceso;
             }).memoria;
-            ctx.fillRect(0, (1048575*i/(1048575*16))*700, 300, (MProceso*700/16)/1048575);
+            
+            ctx.fillStyle = "#" + Math.random(0,16).toString(16);
+            ctx.fillRect(0, (1048576*i/(1048576*16))*700, 300, (MProceso*700/16)/1048576);
         }
-
         // ctx.fillRect(10, (listaProcesos[i].Tamanio/(1048575*16))*700, 100, 100);
         
     }
 }
-
 //console.log(retornarProceso(3));
 // console.log(insertarProceso(retornarProceso([2,3,4,5])));

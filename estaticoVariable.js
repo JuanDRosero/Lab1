@@ -192,7 +192,7 @@ function Insertar(numeroP){
         i++;    //Aumenta
     }
     if(correcto===false){   //No se pudo insertar
-        console.log("No fue posible insertar el elemento debido a que no hay memoria suficiente");
+        alert("No fue posible insertar el elemento debido a que no hay memoria suficiente");
     }
     console.log(procesos);
     pintado();
@@ -209,15 +209,15 @@ function Eliminar(numeroP){
         i++;
     }
     if(correcto===false){   //No se pudo eliminar
-        console.log("No fue posible eliminar el proceso por que no se encntró");
+        alert("No fue posible eliminar el proceso por que no se encontró");
     }
+    pintado();
 }
 
 function pintado(){
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
-    ctx.strokeStyle = "#f212aa";
-    ctx.stroke();
+    ctx.clearRect(0, 0, 300, 700);
     // ctx.strokeRect(0,0,300,200);
     // ctx.strokeRect(0,0,300,200);
     let inicio=0;
