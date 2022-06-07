@@ -48,3 +48,12 @@ select {
 .general {
     background-color: beige;
 }
+.programasTot{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
+.procesosEjec{
+    padding-left: 15px;
+    padding-right: 15px;
+}

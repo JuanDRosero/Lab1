@@ -1,53 +1,15 @@
 
 
 //Diccionario de procesos 
-procesosNombre = [
-    {
-        id: 1, 
-        name: "SO",
-        memoria: 1048575
-    },
-    {
-        id: 2, 
-        name: "Notepad", 
-        memoria: 224649
-    },
-    {
-        id: 3, 
-        name: "Word", 
-        memoria: 286708
-    },
-    {
-        id: 4, 
-        name: "Excel", 
-        memoria: 309150
-    },
-    {
-        id: 5, 
-        name: "AutoCAD", 
-        memoria: 436201
-    },
-    {
-        id: 6, 
-        name: "Calculadora", 
-        memoria: 209462
-    },
-    {
-        id: 7, 
-        name: "Windows Defender", 
-        memoria: 3996608
-    },
-    {
-        id: 8, 
-        name: "PowerPoint", 
-        memoria: 1785608
-    },
-    {
-        id: 9, 
-        name: "Chrome", 
-        memoria: 2696608
-    }
-];
+let procesosNombre = [{id: 1, name: "SO", memoria: 1048575,color: "#4D9032"},
+{id: 2, name: "Notepad", memoria: 224649,color: "#836E40"},
+{id: 3, name: "Word", memoria: 286708,color: "#4F8340"},
+{id: 4, name: "Excel", memoria: 309150,color: "#40837C"},
+{id: 5, name: "AutoCAD", memoria: 436201,color: "#404B83"},
+{id: 6, name: "Calculadora", memoria: 209462,color: "#774083"},
+{id: 7, name: "Windows Defender", memoria: 3996608,color: "#834078"},
+{id: 8, name: "PowerPoint", memoria: 1785608,color: "#22307E"},
+{id: 9, name: "Chrome", memoria: 2696608,color: "#588380"}];
 
 listaProcesos = [
     {
@@ -238,6 +200,10 @@ function pintado(){
             let MProceso=procesosNombre.find(function (element){
                 return element.id==listaProcesos[i].Proceso;
             }).memoria;
+            let colorPro=procesosNombre.find(function (element){
+                return element.id==listaProcesos[i].Proceso;
+            }).color;
+            ctx.fillStyle = colorPro;
             
             ctx.fillStyle = "#" + Math.random(0,16).toString(16);
             ctx.fillRect(0, (1048576*i/(1048576*16))*700, 300, (MProceso*700/16)/1048576);
