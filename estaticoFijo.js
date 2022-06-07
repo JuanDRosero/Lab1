@@ -1,3 +1,5 @@
+
+
 //Diccionario de procesos 
 procesosNombre = [
     {
@@ -161,6 +163,7 @@ function retornarProceso(idProceso){
 
 //Esta funcion hara de algoritmo de primera opcion
 function insertarProceso(proceso){
+
     for(var i = 0; i < proceso.length; i++){
         for(var j = 0; j < listaProcesos.length; j++){
             if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio >= proceso[i].memoria){
@@ -170,10 +173,16 @@ function insertarProceso(proceso){
             }
         }
     }
+    pintado();
+    console.log(listaProcesos);
     return listaProcesos;
 }
 
 function eliminarProceso(proceso){
+
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(10, 10, 100, 100);
+
     for(var i = 0; i < proceso.length; i++){
         for(var j = 0; j < listaProcesos.length; j++){
             if(listaProcesos[j].Proceso != null && listaProcesos[j].Proceso == proceso[i]){
@@ -186,5 +195,37 @@ function eliminarProceso(proceso){
     return listaProcesos;
 }
 
+function pru(){
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "green";
+    ctx.fillRect(10, 10, 100, 100);
+    ctx.strokeRect(0,0,300,200);
+}
+
+function pintado(){
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.strokeStyle = "#f212aa";
+    ctx.stroke();
+    // ctx.strokeRect(0,0,300,200);
+    // ctx.strokeRect(0,0,300,200);
+
+
+    for (let i = 0; i < listaProcesos.length; i++) {
+        ctx.strokeRect(0,(1048575*i/(1048575*16))*700,300,700/16);
+
+        if(listaProcesos[i].Proceso != null){
+            let MProceso=procesosNombre.find(function (element){
+                return element.id==listaProcesos[i].Proceso;
+            }).memoria;
+            ctx.fillRect(0, (1048575*i/(1048575*16))*700, 300, (MProceso*700/16)/1048575);
+        }
+
+        // ctx.fillRect(10, (listaProcesos[i].Tamanio/(1048575*16))*700, 100, 100);
+        
+    }
+}
+
 //console.log(retornarProceso(3));
-console.log(insertarProceso(retornarProceso([2,3,4,5])));
+// console.log(insertarProceso(retornarProceso([2,3,4,5])));
