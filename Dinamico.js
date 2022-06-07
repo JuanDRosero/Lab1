@@ -55,8 +55,8 @@ listaProcesos = [
         Tamanio : 1048575,
         DirInicial : 0, 
         DirFinal : 1048576,
-        DirInicialH : "00000",
-        DirFinalH : "0ffff"
+        DirInicialH : "0x00000",
+        DirFinalH : "0x0ffff"
     }
 ];
 
@@ -82,7 +82,7 @@ function insertarProceso(proceso){
     //Objeto de procesos 
     var objetos = retornarProceso(proceso);    
     for(var i = 0; i < objetos.length; i++){
-        console.log("Disponible: " + disponible);
+        alert("Memoria Disponible: " + disponible+" KiB");
         if(disponible > 0 && disponible >= objetos[i].memoria){
             disponible -= objetos[i].memoria;
             listaProcesos.push({
@@ -96,7 +96,7 @@ function insertarProceso(proceso){
             // console.log("Disponible: " + disponible);
         }else{
             i = objetos.length;
-            console.log("No se pueden agregar más procesos, memoria insuficiente");
+            alert("No se pueden agregar más procesos, memoria insuficiente");
         }
     }
     //Se inicia en 1 ya que el SO es la posicion 0
@@ -144,7 +144,7 @@ function insertarPrimerAjuste(proceso){
             if(listaProcesos[j].Proceso == null && proceso[i].memoria < listaProcesos[j].Tamanio){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = listaProcesos.length;
-                console.log("Se inserto el proceso");
+                alert("Se inserto el proceso");
             }
             if(j == listaProcesos.length){
                 insertarProceso(proceso);
@@ -160,7 +160,7 @@ function insertarPeorAjuste(proceso){
             if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio > proceso[i].memoria){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = 0;
-                console.log("Se inserto el proceso");
+                alert("Se inserto el proceso");
             }
             if(j == listaProcesos.length){
                 insertarProceso(proceso);
@@ -176,7 +176,7 @@ function insertarMejorAjuste(proceso){
             if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio == proceso[i].memoria){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = listaProcesos.length;
-                console.log("Se inserto el proceso");
+                alert("Se inserto el proceso");
             }
             if(j == listaProcesos.length){
                 insertarProceso(proceso);
@@ -193,11 +193,12 @@ function eliminarProceso(proceso){
         for(var j = 0; j < listaProcesos.length; j++){
             if(listaProcesos[j].Proceso == proceso[i]){
                 listaProcesos[j].Proceso = null;
+                alert("El proceso se eliminó correctamente");
                 disponible += listaProcesos[j].Tamanio;
                 j = listaProcesos.length;
             }
             if(j == listaProcesos.length - 1){
-                console.log("No se econtro el proceso");
+                alert("No se econtro el proceso");
             }
         }
     }
@@ -220,6 +221,7 @@ function compactarMemoria(){
         }
     }
     pintado();
+    actualizarTabla();
     alert("Se termino el proceso de compactación");
 }
 
@@ -259,11 +261,15 @@ function actualizarTabla(){
             var proceso = procesosNombre.find(function (element){
                 return element.id==listaProcesos[i].Proceso;
             });
-            lista.innerHTML += "<tr><td>"+proceso.id+"</td><td>"+proceso.name+"</td><td>"+proceso.memoria+"</td><td>"+listaProcesos[i].DirInicial+"</td><td>"+listaProcesos[i].DirFinal+"</td></tr>"    
+            lista.innerHTML += "<tr><td>"+proceso.id+"</td><td>"+proceso.name+"</td><td>"+proceso.memoria+"</td><td>"+listaProcesos[i].DirInicialH+"</td><td>"+listaProcesos[i].DirFinalH+"</td></tr>"    
         }
         
     }  
 }
+window.onload = function(){
+    actualizarTabla();
+    pintado();
+    }
 
 //insertarProceso([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
 

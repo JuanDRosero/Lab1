@@ -163,16 +163,20 @@ function retornarProceso(idProceso){
 
 //Esta funcion hara de algoritmo de primera opcion
 function insertarProceso(proceso){
-
+    let correcto = false;
     for(var i = 0; i < proceso.length; i++){
         for(var j = 0; j < listaProcesos.length; j++){
             if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio >= proceso[i].memoria){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = listaProcesos.length;
+                correcto=true;
                 alert('Se insertó el proceso');
 
             }
         }
+    }
+    if(!correcto){
+        alert('No fue posible insertar el proceso debido a falta de memoria');
     }
     actualizarTabla();
     pintado();
@@ -242,5 +246,9 @@ function pintado(){
         
     }
 }
+window.onload = function(){
+    actualizarTabla();
+    pintado();
+    }
 //console.log(retornarProceso(3));
 // console.log(insertarProceso(retornarProceso([2,3,4,5])));

@@ -187,6 +187,7 @@ function Insertar(numeroP){
             if(MProceso<=procesos[i].Tamaño){   //Revisa si cabe
                 procesos[i].Proceso=numeroP;
                 correcto=true;
+                alert("El proceso se insertó correctamente");
             }    
         }
         i++;    //Aumenta
@@ -206,6 +207,7 @@ function Eliminar(numeroP){
         if(procesos[i].Proceso===numeroP){
             procesos[i].Proceso=null;
             correcto=true;
+            alert("El proceso se eliminó correctamente");
         }
         i++;
     }
@@ -254,7 +256,30 @@ function actualizarTabla(){
         
     }  
 }
-IniciarMejor();
+let selectElement;
+window.onload = function(){
+    IniciarMejor();
+    selectElement= document.getElementById("tbl2");
+    selectElement.addEventListener('change', (event) => {
+        switch(selectElement.value){  
+            case "1":     //Primer Ajuste
+                IniciarMejor();
+                break;
+            case "2":
+                IniciarMejor();
+                break;
+            case "3":
+                IniciarPeor();
+                break;
+            default:
+                console.log(selectElement.value);
+        }
+        actualizarTabla();
+        pintado();
+    });
+    actualizarTabla();
+        pintado();
+    }
 
 /*
 IniciarMejor();
