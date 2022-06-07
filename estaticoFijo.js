@@ -169,7 +169,7 @@ function insertarProceso(proceso){
             if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio >= proceso[i].memoria){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = listaProcesos.length;
-                console.log('Se insertó el proceso');
+                alert('Se insertó el proceso');
             }
         }
     }
@@ -188,7 +188,7 @@ function eliminarProceso(proceso){
             if(listaProcesos[j].Proceso != null && listaProcesos[j].Proceso == proceso[i]){
                 listaProcesos[j].Proceso = null;
                 j = listaProcesos.length;
-                console.log('Se elimino el proceso');
+                alert('Se elimino el proceso');
             }
         }
     }
