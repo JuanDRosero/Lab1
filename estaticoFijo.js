@@ -191,6 +191,9 @@ function eliminarProceso(proceso){
                 j = listaProcesos.length;
                 alert('Se eliminó el proceso');
             }
+            if(j==listaProcesos.length - 1){
+                alert("No se econtro el proceso");
+            }
         }
     }
     pintado();

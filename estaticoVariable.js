@@ -98,7 +98,6 @@ function IniciarMejor(){
 
 //que ordena la ram en particiones de objetos peor Ajuste (de pequeño a grande) (1,4096,4096,2048,1024,1024.1024,512,512,512,256,256)
 function IniciarPeor(){
-    console.log("Cambio esta cosa");
     procesos=
     [
         {
@@ -236,33 +235,7 @@ function pintado(){
         inicio+=(procesos[i].Tamaño)*(700/(16*1048576))   
     }
 }
-let selectElement;
-window.onload = function(){
-    IniciarMejor();
-    selectElement= document.getElementById("tbl2");
-    selectElement.addEventListener('change', (event) => {
-        switch(selectElement.value){  
-            case "1":     //Primer Ajuste
-                IniciarMejor();
-                break;
-            case "2":
-                IniciarMejor();
-                break;
-            case "3":
-                IniciarPeor();
-                break;
-            default:
-                console.log(selectElement.value);
-        }
-        pintado();
-    });
-    pintado();
-    }
-    
-    
-
-
-
+IniciarMejor();
 
 /*
 IniciarMejor();

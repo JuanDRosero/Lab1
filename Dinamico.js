@@ -82,8 +82,9 @@ function insertarProceso(proceso){
     //Objeto de procesos 
     var objetos = retornarProceso(proceso);    
     for(var i = 0; i < objetos.length; i++){
-        disponible -= objetos[i].memoria;
-        if(disponible > 0 && disponible > objetos[i].memoria){
+        console.log("Disponible: " + disponible);
+        if(disponible > 0 && disponible >= objetos[i].memoria){
+            disponible -= objetos[i].memoria;
             listaProcesos.push({
                 Proceso: objetos[i].id,
                 Tamanio: objetos[i].memoria,
@@ -92,10 +93,10 @@ function insertarProceso(proceso){
                 DirInicialH : null,
                 DirFinalH : null
             });
-            console.log("Disponible: " + disponible);
+            // console.log("Disponible: " + disponible);
         }else{
             i = objetos.length;
-            alert("No se pueden agregar más procesos, memoria insuficiente");
+            console.log("No se pueden agregar más procesos, memoria insuficiente");
         }
     }
     //Se inicia en 1 ya que el SO es la posicion 0
@@ -111,6 +112,7 @@ function insertarProceso(proceso){
             listaProcesos[i].DirFinalH = "0x"+decToHex(listaProcesos[i].DirFinal);
         }
     }
+    pintado();
 }
 
 function insertarPrimerAjuste(proceso){
@@ -119,7 +121,7 @@ function insertarPrimerAjuste(proceso){
             if(listaProcesos[j].Proceso == null && proceso[i].memoria < listaProcesos[j].Tamanio){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = listaProcesos.length;
-                alert("Se inserto el proceso, con primer ajuste");
+                console.log("Se inserto el proceso");
             }
         }
     }
@@ -132,7 +134,7 @@ function insertarPeorAjuste(proceso){
             if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio > proceso[i].memoria){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = 0;
-                alert("Se inserto el proceso, con peor ajuste");
+                console.log("Se inserto el proceso");
             }
         }
     }
@@ -145,7 +147,7 @@ function insertarMejorAjuste(proceso){
             if(listaProcesos[j].Proceso == null && listaProcesos[j].Tamanio == proceso[i].memoria){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = listaProcesos.length;
-                alert("Se inserto el proceso, con mejor ajuste");
+                console.log("Se inserto el proceso");
             }
         }
     }
@@ -159,10 +161,10 @@ function eliminarProceso(proceso){
                 listaProcesos[j].Proceso = null;
                 disponible += listaProcesos[j].Tamanio;
                 j = listaProcesos.length;
-                alert("Se elimino el proceso");
             }
         }
     }
+    pintado();
 }
 
 function compactarMemoria(){
@@ -179,12 +181,39 @@ function compactarMemoria(){
             disponible+=desplazamiento;
         }
     }
-    alert("Se termino el proceso de compactación")
+    pintado();
+    alert("Se termino el proceso de compactación");
+}
+
+function pintado(){
+
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "green";
+    ctx.clearRect(0, 0, 300, 700);
+    // ctx.strokeRect(0,0,300,200);
+    // ctx.strokeRect(0,0,300,200);
+    let inicio=0;
+    console.log(listaProcesos.length);
+    for (let i = 0; i < listaProcesos.length; i++) {
+        ctx.strokeRect(0,inicio,300,(listaProcesos[i].Tamanio)*(700/(16*1048576)));
+
+        if(listaProcesos[i].Proceso != null){
+            let MProceso=procesosNombre.find(function (element){
+                return element.id==listaProcesos[i].Proceso;
+            }).memoria;
+            ctx.fillRect(0, inicio, 300, (MProceso*(listaProcesos[i].Tamanio)*(700/(16*1048576)))/listaProcesos[i].Tamanio);
+        }
+
+        // ctx.fillRect(10, (listaProcesos[i].Tamanio/(1048575*16))*700, 100, 100);
+        inicio+=(listaProcesos[i].Tamanio)*(700/(16*1048576))   
+    }
+    console.log(listaProcesos);
 }
 
 //insertarProceso([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
 
-insertarProceso([2,2,4,6,4,2]);
+// insertarProceso([2,2,4,6,4,2]);
 
 //console.log(listaProcesos);
 /*

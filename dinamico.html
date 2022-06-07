@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio 1</title>
+    <script src="Dinamico.js"></script>
+    <link rel="stylesheet" href="wer.css">
+</head>
+<body>
+    <ul>
+        <li><a href="estaticoFijo.html">Estático Fijo</a></li>
+        <li><a href="estaticoVariable.html">Estático Variable</a></li>
+        <li><a href="dinamico.html">Sin compactación</a></li>
+        <li><a href="dinamico.html">Con compactación</a></li>
+      </ul>
+    <div class="general">
+        <div class="tituloGen">Laboratorio #1 - Sistemas Operativos</div>
+        <!-- <div class="eleccion">
+            <div>Programas disponibles:</div>
+            <select id="tbl1">
+                <option value="1">Particiones estáticas fijas</option>
+                <option value="2">Particiones estáticas variables</option>
+                <option value="3">Particiones dinámicas sin compactación</option>
+                <option value="4">Particiones dinámicas con compactación</option>
+            </select>
+        </div> -->
+        <div class="eleccion">
+            <div>Algoritmos de asignación:</div>
+            <select id="tbl2">
+                <option value="1">Primer ajuste</option>
+                <option value="2">Mejor ajuste</option>
+                <option value="3">Peor ajuste</option>
+            </select>
+        </div>
+        <div><button name="button1" onclick="compactarMemoria()">Compactar memoria</button></div>
+    </div>
+    <div class="dibujo" style="background-color: rgb(255, 255, 255);">
+        <!-- <input type="button" value="Genera una tabla" onclick="dibujarTabla()"> -->
+        <canvas id="canvas" width="300" height="700" style="border: 2px solid rgb(0, 0, 0);"></canvas>
+        <script></script>
+    </div>
+    <div class="programProces">
+        <table class="programasTot">
+            <tr>
+                <th>Nombre Programa</th>
+                <th>Tamaño</th>
+                <th>Acción</th>
+            </tr>
+            <tr>
+                <td>NotePad</td>
+                <td>224649</td>
+                <td><button name="button1" onclick="insertarProceso([2])">Ejecutar</button>
+                    <button name="button2" onclick="eliminarProceso([2])">Eliminar</button></td>
+            </tr>
+            <tr>
+                <td>Word</td>
+                <td>286708</td>
+                <td><button name="button2" onclick="insertarProceso([3])">Ejecutar</button>
+                    <button name="button2" onclick="eliminarProceso([3])">Eliminar</button></td>
+            </tr>
+            <tr>
+                <td>Excel</td>
+                <td>309150</td>
+                <td><button name="button3" onclick="insertarProceso([4])">Ejecutar</button>
+                    <button name="button2" onclick="eliminarProceso([4])">Eliminar</button></td>
+            </tr>
+            <tr>
+                <td>AutoCAD</td>
+                <td>436201</td>
+                <td><button name="button4" onclick="insertarProceso([5])">Ejecutar</button>
+                    <button name="button2" onclick="eliminarProceso([5])">Eliminar</button></td>
+            </tr>
+            <tr>
+                <td>Calculadora</td>
+                <td>209462</td>
+                <td><button name="button5" onclick="insertarProceso([6])">Ejecutar</button>
+                    <button name="button2" onclick="eliminarProceso([6])">Eliminar</button></td>
+            </tr>
+            <tr>
+                <td>Windows Defender</td>
+                <td>3996608</td>
+                <td><button name="button6" onclick="insertarProceso([7])">Ejecutar</button>
+                    <button name="button2" onclick="eliminarProceso([7])">Eliminar</button></td>
+            </tr>
+            <tr>
+                <td>PowerPoint</td>
+                <td>1785608</td>
+                <td><button name="button7" onclick="insertarProceso([8])">Ejecutar</button>
+                    <button name="button2" onclick="eliminarProceso([8])">Eliminar</button></td>
+            </tr>
+            <tr>
+                <td>Chrome</td>
+                <td>2696608</td>
+                <td><button name="button8" onclick="insertarProceso([9])">Ejecutar</button>
+                    <button name="button2" onclick="eliminarProceso([9])">Eliminar</button></td>
+            </tr>
+        </table>
+        <table class="procesosEjec">
+            <tr>
+                <th>Item</th>
+                <th>Nombre Proceso</th>
+                <th>Tamaño</th>
+                <th>Posición</th>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
