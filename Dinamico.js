@@ -116,6 +116,25 @@ function insertarProceso(proceso){
     pintado();
 }
 
+function insertarMemoria(proceso){
+    let insertado = flase;
+    let i = 0;
+    switch(document.getElementById("id").value){
+        case "1":
+            while(insertado == false && i < listaProcesos.length - 1){
+                insertarMejorAjuste(proceso);
+            }
+        case "2":
+            while(insertado == false && i < listaProcesos.length - 1){
+                insertarPeorAjuste(proceso);
+            }
+        case "3":
+            while(insertado == false && i < listaProcesos.length - 1){
+                insertarMejorAjuste(proceso);
+            }
+    }
+}
+
 function insertarPrimerAjuste(proceso){
     for(var i = 0; i < proceso.length; i++){
         for(var j = 0; j < listaProcesos.length; j++){
@@ -123,6 +142,9 @@ function insertarPrimerAjuste(proceso){
                 listaProcesos[j].Proceso = proceso[i].id;
                 j = listaProcesos.length;
                 console.log("Se inserto el proceso");
+            }
+            if(j == listaProcesos.length){
+                insertarProceso(proceso);
             }
         }
     }
@@ -137,6 +159,9 @@ function insertarPeorAjuste(proceso){
                 j = 0;
                 console.log("Se inserto el proceso");
             }
+            if(j == listaProcesos.length){
+                insertarProceso(proceso);
+            }
         }
     }
     return listaProcesos;
@@ -150,10 +175,15 @@ function insertarMejorAjuste(proceso){
                 j = listaProcesos.length;
                 console.log("Se inserto el proceso");
             }
+            if(j == listaProcesos.length){
+                insertarProceso(proceso);
+            }
         }
     }
     return listaProcesos;
 }
+
+
 
 function eliminarProceso(proceso){
     for(var i = 0; i < proceso.length; i++){
@@ -163,9 +193,11 @@ function eliminarProceso(proceso){
                 disponible += listaProcesos[j].Tamanio;
                 j = listaProcesos.length;
             }
+            if(j == listaProcesos.length - 1){
+                console.log("No se econtro el proceso");
+            }
         }
     }
-    actualizarTabla()
     actualizarTabla();
     pintado();
 }
