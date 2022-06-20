@@ -20,18 +20,20 @@ let procesosNombre = [
     Stack:539322, Heap:269661, Bss:134830, Data:134830, Text: 1617965, Num:0, color: "#588380"}];
 
 //variable que representa la RAM
-let procesos=[
+procesos=[    
     {
-            Proceso:"S.0",
-            Tamaño:1048576,
-            DirI:0,
-            DirFin:1048575,
-            DirIH:"0x000000",
-            DirFH:"0x0fffff"
+    Proceso:"S.0",
+    Tamaño:1048576,
+    DirI:0,
+    DirFin:1048575,
+    DirIH:"0x000000",
+    DirFH:"0x0fffff"
     }
 ];
 
-let tablaSegmentos=[
+
+
+var tablaSegmentos=[
     {
         ProcesoID:0,
         Segmento:"nn",
@@ -51,11 +53,11 @@ let tablaEspaciosL={
 
 //Función para crear una partición
 function crearP(NombreP,TamP){
-    if(tablaEspaciosL.Tam>=Tamp){   //Si hay suficiente espacio para meter el proceso
-        procesos.push(Proceso=NombreP,Tamaño=TamP,DirI=tablaEspaciosL.DirI,DirF=tablaEspaciosL.DirI+TamP,
-             DirIH='0x'+decToHex(tablaEspaciosL.DirI) , DirFH='0x'+decToHex(DirFtablaEspaciosL.DirI+TamP));
+    if(tablaEspaciosL.Tam>=TamP){   //Si hay suficiente espacio para meter el proceso
+        procesos.push({Proceso:NombreP,Tamaño:TamP,DirI:tablaEspaciosL.DirI,DirF:tablaEspaciosL.DirI+TamP,
+             DirIH:'0x'+decToHex(tablaEspaciosL.DirI) , DirFH:'0x'+decToHex(tablaEspaciosL.DirI+TamP)});
         tablaEspaciosL.Tam-=TamP;   //Se reduce el espacio libre para hacer part
-        tablaEspaciosL.DirI=DirFtablaEspaciosL.DirI+TamP+1; //Se actualiza la dir. Inicial
+        tablaEspaciosL.DirI=tablaEspaciosL.DirI+TamP+1; //Se actualiza la dir. Inicial
         tablaEspaciosL.DirIH='0x'+decToHex(tablaEspaciosL.DirI); //Se actualiza la Dir inicial Hexa
         return true;
     }else{
@@ -67,15 +69,16 @@ function crearP(NombreP,TamP){
 */
 
 //Función insertar
-function insertaProceso(Proceso){
+function insertaProceso(proceso){
     let copiaProcesos=proceso;  //Se crea una copia de seguridad del proceso
     let copiaTablaSeg=tablaSegmentos;   //Se crea una copia de seguridad de la tabla de segmentos
     let Proceso=procesosNombre.find(function (element){
-        return element.id==Proceso;
+        return element.id==proceso;
     }); //Se obtiene el proceso
     //Determinar con que algoritmo se inserta
-    selectElement= document.getElementById("tbl2");
+        //selectElement= document.getElementById("tbl2");
     let correcto=true;
+    /*
     selectElement.addEventListener('change', (event) => {   //Esto esta mal
         switch(selectElement.value){  
             case "1":     //Primer Ajuste
@@ -115,16 +118,26 @@ function insertaProceso(Proceso){
                 console.log(selectElement.value);
         }
     })
-
+    */
+    correcto=insertarPrimer(proceso,'Text')&&insertarPrimer(proceso,'Heap') &&insertarPrimer(proceso,'Stack') &&
+    insertarPrimer(proceso,'Base')&&insertarPrimer(proceso,'Data');
+    if(correcto){
+        Proceso.num++;
+    }else{
+        //alert("No fue posible insertar el proceso "+Proceso.name);
+        console.log("No fue posible insertar el proceso "+Proceso.name)
+        procesos=copiaProcesos;
+        tablaSegmentos=copiaTablaSeg;
+    }
 }
 //Función insertar Primer ajuste (Segmento)
-function insertarPrimer(Proceso, segmento){
+function insertarPrimer(proceso, segmento){
     let correcto=false;  //varibale para saber si se inserto correctamente
     let memoria;        //Variabe para almacenar la memoria que ocupa el segmento
     let Proceso=procesosNombre.find(function (element){
-        return element.id==Proceso;
+        return element.id==proceso;
     }); //Se obtiene el proceso
-    let NProceso= Proceso+" ("+Proceso.Num+") ."+segmento;  //Obtiene el numbre que se va a insertar
+    let NProceso= Proceso.name+" ("+Proceso.Num+") ."+segmento;  //Obtiene el numbre que se va a insertar
     switch(segmento){   //Se obtiene el tamaño del segmento
         case 'Stack':
             memoria=Proceso.Stack;
@@ -166,13 +179,13 @@ function insertarPrimer(Proceso, segmento){
     }
 }
 
-function insertarPeor(Proceso, segmento){
+function insertarPeor(proceso, segmento){
     let correcto=false;  //varibale para saber si se inserto correctamente
     let memoria;        //Variabe para almacenar la memoria que ocupa el segmento
     let Proceso=procesosNombre.find(function (element){
-        return element.id==Proceso;
+        return element.id==proceso;
     }); //Se obtiene el proceso
-    let NProceso= Proceso+" ("+Proceso.Num+") ."+segmento;  //Obtiene el numbre que se va a insertar
+    let NProceso= Proceso.name+" ("+Proceso.Num+") ."+segmento;  //Obtiene el numbre que se va a insertar
     switch(segmento){   //Se obtiene el tamaño del segmento
         case 'Stack':
             memoria=Proceso.Stack;
@@ -222,13 +235,13 @@ function insertarPeor(Proceso, segmento){
     }
 }
 
-function insertarMejor(Proceso, segmento){
+function insertarMejor(proceso, segmento){
     let correcto=false;  //varibale para saber si se inserto correctamente
     let memoria;        //Variabe para almacenar la memoria que ocupa el segmento
     let Proceso=procesosNombre.find(function (element){
-        return element.id==Proceso;
+        return element.id==proceso;
     }); //Se obtiene el proceso
-    let NProceso= Proceso+" ("+Proceso.Num+") ."+segmento;  //Obtiene el numbre que se va a insertar
+    let NProceso= Proceso.name+" ("+Proceso.Num+") ."+segmento;  //Obtiene el numbre que se va a insertar
     switch(segmento){   //Se obtiene el tamaño del segmento
         case 'Stack':
             memoria=Proceso.Stack;
@@ -315,4 +328,11 @@ function eliminar(Proceso){
     }
 }
 
+insertaProceso(2);
+insertaProceso(3);
+insertaProceso(2);
+insertaProceso(5);
+console.log(procesos);
+console.log('Tabla de segmentos');
+console.log(tablaSegmentos);
 //Función compactar (Solo unir los espacios libres seguidos)

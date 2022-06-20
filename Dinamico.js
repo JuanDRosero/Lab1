@@ -1,9 +1,5 @@
 //Diccionario de procesos 
-<<<<<<< HEAD
-let procesosNombre = [{id: 1, name: "SO", memoria: 1048575,color: "#4D9032"},
-=======
 procesosNombre = [{id: 1, name: "SO", memoria: 1048575,color: "#4D9032"},
->>>>>>> 2a25f5d81ac18d048bdf3908d5eafc5143f58f06
 {id: 2, name: "Notepad", memoria: 224649,color: "#836E40"},
 {id: 3, name: "Word", memoria: 286708,color: "#4F8340"},
 {id: 4, name: "Excel", memoria: 309150,color: "#40837C"},
