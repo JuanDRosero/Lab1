@@ -20,7 +20,7 @@ let procesosNombre = [
     Stack:539322, Heap:269661, Bss:134830, Data:134830, Text: 1617965, Num:0, color: "#588380"}];
 
 //variable que representa la RAM
-procesos=[    
+procesosLista= [    
     {
     Proceso:"S.0",
     Tamaño:1048576,
@@ -54,8 +54,14 @@ let tablaEspaciosL={
 //Función para crear una partición
 function crearP(NombreP,TamP){
     if(tablaEspaciosL.Tam>=TamP){   //Si hay suficiente espacio para meter el proceso
-        procesos.push({Proceso:NombreP,Tamaño:TamP,DirI:tablaEspaciosL.DirI,DirF:tablaEspaciosL.DirI+TamP,
-             DirIH:'0x'+decToHex(tablaEspaciosL.DirI) , DirFH:'0x'+decToHex(tablaEspaciosL.DirI+TamP)});
+        procesosLista.push(
+            {   Proceso:NombreP,
+                Tamaño:TamP,
+                DirI:tablaEspaciosL.DirI,
+                DirF:tablaEspaciosL.DirI+TamP,
+                DirIH:'0x'+decToHex(tablaEspaciosL.DirI) ,
+                DirFH:'0x'+decToHex(tablaEspaciosL.DirI+TamP)
+            });
         tablaEspaciosL.Tam-=TamP;   //Se reduce el espacio libre para hacer part
         tablaEspaciosL.DirI=tablaEspaciosL.DirI+TamP+1; //Se actualiza la dir. Inicial
         tablaEspaciosL.DirIH='0x'+decToHex(tablaEspaciosL.DirI); //Se actualiza la Dir inicial Hexa
@@ -70,7 +76,7 @@ function crearP(NombreP,TamP){
 
 //Función insertar
 function insertaProceso(proceso){
-    let copiaProcesos=proceso;  //Se crea una copia de seguridad del proceso
+    let copiaProcesos=procesosLista;  //Se crea una copia de seguridad del proceso
     let copiaTablaSeg=tablaSegmentos;   //Se crea una copia de seguridad de la tabla de segmentos
     let Proceso=procesosNombre.find(function (element){
         return element.id==proceso;
@@ -156,13 +162,13 @@ function insertarPrimer(proceso, segmento){
             break;
     }
     //Se intenta insertar en los huecos de la ram
-    for(let i=0;i<procesos.length;i++){
-        if(procesos[i].Proceso==null){
-            if(procesos[i].Tamaño>=memoria){
-                procesos[i].name=NProceso;
+    for(let i=0;i<procesosLista.length;i++){
+        if(procesosLista[i].Proceso==null){
+            if(procesosLista[i].Tamaño>=memoria){
+                procesosLista[i].name=NProceso;
                 correcto=true;
                 tablaSegmentos.push(ProcesoID=Proceso.id, Segmento=segmento, DirI=procesos[i].DirIH, 
-                    Limite=procesos[i].Tamaño); //Inserta el elemeto en la tabla de segmentos
+                    Limite=procesoLista[i].Tamaño); //Inserta el elemeto en la tabla de segmentos
                 return correcto;
             }
         }
@@ -170,8 +176,8 @@ function insertarPrimer(proceso, segmento){
     //Si no se pudo insertar se crea una nueva partición
     if(!correcto){
         if(crearP(NProceso,memoria)){
-            tablaSegmentos.push(ProcesoID=Proceso.id, Segmento=segmento, DirI=procesos[procesos.length-1].DirIH, 
-                Limite=procesos[procesos.length-1].Tamaño); //Inserta el elemeto en la tabla de segmentos
+            tablaSegmentos.push(ProcesoID=Proceso.id, Segmento=segmento, DirI=procesosLista[procesosLista.length-1].DirIH, 
+                Limite=procesosLista[procesosLista.length-1].Tamaño); //Inserta el elemeto en la tabla de segmentos
                 return true;
         }else{
             return false;
