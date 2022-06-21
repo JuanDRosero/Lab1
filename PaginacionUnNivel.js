@@ -230,6 +230,7 @@ function insertarProceso(numeroP){
             if(listaProcesos[j].idProceso == null){
                 listaProcesos[j].idProceso = idProceso;
                 j = listaProcesos.length;
+
                 if(j == listaProcesos.length - 1){
                     console.log("No hay más memoria para insertar más procesos");
                 }
@@ -246,6 +247,9 @@ function insertarProceso(numeroP){
         marcosUsados : marcosUsados(numeroP),
         paginas : calcularPaginas(numeroP)
     });
+    actualizarTabla();
+    console.log(listaProcesos);
+    pintado();
 }
 
 function marcosUsados(numeroP){
@@ -283,21 +287,66 @@ function eliminarProceso(numeroP){
             console.log("Se elimino el proceso");
         }
     }
+    actualizarTabla();
+    console.log(listaProcesos);
+    pintado();
 }
 
-insertarProceso(9);
-insertarProceso(3);
-insertarProceso(9);
-//console.log(listaProcesos, listaDeTablasDeProceso);
-//console.log(marcosUsados(9));
-//console.log(listaDeTablasDeProceso);
-//console.log(listaProcesos);
-eliminarProceso(9);
-insertarProceso(4);
-insertarProceso(9);
-//console.log("---------------------------");
-console.log(listaDeTablasDeProceso);
-//console.log(listaProcesos);
-//eliminarProceso(9);
-//console.log("-----------------------------");
-console.log(listaProcesos);
+function actualizarTabla(){
+    var todo = "<tr><th>Item</th><th>Nombre Proceso</th><th>Tamaño</th><th>Dirección inicial partición</th><th>Dirección final partición</th></tr>"
+    const lista = document.getElementById("procEjec");
+    lista.innerHTML = todo;
+
+    for (var i = 0; i < listaProcesos.length; i++) {
+        if(listaProcesos[i].Proceso != null){
+            var proceso = procesosNombre.find(function (element){
+                return element.id==listaProcesos[i].Proceso;
+            });
+            lista.innerHTML += "<tr><td>"+proceso.id+"</td><td>"+proceso.name+"</td><td>"+proceso.memoria+"</td><td>"+listaProcesos[i].DirInicial+"</td><td>"+listaProcesos[i].DirFinal+"</td></tr>"    
+        }
+        
+    }  
+}
+
+function pintado(){
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "green";
+    ctx.clearRect(0, 0, 300, 700);
+
+    for (let i = 0; i < listaProcesos.length; i++) {
+        ctx.strokeRect(0,(524288*i/(524288*32))*700,300,700/32);
+
+        if(listaProcesos[i].idProceso != null){
+            let colorPro=procesosNombre.find(function (element){
+                return element.id==listaProcesos[i].idProceso;
+            }).color;
+            ctx.fillStyle = colorPro;
+            
+            ctx.fillRect(0, (524288*i/(524288*32))*700, 300, (524288/(524288*32))*700);
+        }
+        
+    }
+}
+
+window.onload = function(){
+    actualizarTabla();
+    pintado();
+    }
+
+// insertarProceso(9);
+// insertarProceso(3);
+// insertarProceso(9);
+// //console.log(listaProcesos, listaDeTablasDeProceso);
+// //console.log(marcosUsados(9));
+// //console.log(listaDeTablasDeProceso);
+// //console.log(listaProcesos);
+// eliminarProceso(9);
+// insertarProceso(4);
+// insertarProceso(9);
+// //console.log("---------------------------");
+// console.log(listaDeTablasDeProceso);
+// //console.log(listaProcesos);
+// //eliminarProceso(9);
+// //console.log("-----------------------------");
+// console.log(listaProcesos);
