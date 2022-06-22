@@ -224,31 +224,39 @@ function insertarProceso(numeroP){
         return element.id == numeroP;
     }).name;
 
+    let marcosDisponibles = 0;
     let cantidadDeMarcos = calcularPaginas(numeroP);
+
+    for(var i = 0; i < listaProcesos.length; i++){
+        if(listaProcesos[i].idProceso == null){
+            marcosDisponibles++;
+        }
+    }
+    console.log("MARCOS DISPONIBLES " + marcosDisponibles);
+    var ban = false;
     for(var i = 0; i < cantidadDeMarcos; i++){
         for(j = 0; j < listaProcesos.length; j++){
-            if(listaProcesos[j].idProceso == null){
+            if(listaProcesos[j].idProceso == null && marcosDisponibles >= cantidadDeMarcos){
                 listaProcesos[j].idProceso = idProceso;
+                ban = true;
                 j = listaProcesos.length;
-
-                if(j == listaProcesos.length - 1){
-                    console.log("No hay más memoria para insertar más procesos");
-                }
+                
             }
+        }      
+        if(i == cantidadDeMarcos - 1 && !ban){
+            console.log("No se puede insertar el proceso, marcos insuficientes")
         }
-        if(i == cantidadDeMarcos - 1){
-            console.log("Se inserto el proceso");
-        }
-        
     }
-
-    listaDeTablasDeProceso.push({
-        proceso : nombreProceso,
-        marcosUsados : marcosUsados(numeroP),
-        paginas : calcularPaginas(numeroP)
-    });
+    if(ban == true){
+        listaDeTablasDeProceso.push({
+            proceso : nombreProceso,
+            marcosUsados : marcosUsados(numeroP),
+            paginas : calcularPaginas(numeroP)
+        });
+        console.log("Se inserto el proceso");
+    }
     actualizarTabla();
-    console.log(listaProcesos);
+    console.log(listaDeTablasDeProceso);
     pintado();
 }
 
@@ -264,31 +272,37 @@ function marcosUsados(numeroP){
 }
 
 function eliminarProceso(numeroP){
+    var marcosEliminar = [];
     let idProceso = procesosNombre.find(function (element){
         return element.id == numeroP;
     }).name;
-    let marcosEliminar;
     for(var i = 0; i < listaDeTablasDeProceso.length; i++){
-        if(listaDeTablasDeProceso[i].proceso == idProceso){
+        if(listaDeTablasDeProceso[i].proceso == idProceso && listaDeTablasDeProceso[i].marcosUsados.length > 0){
             marcosEliminar = listaDeTablasDeProceso[i].marcosUsados;
-            listaDeTablasDeProceso[i].marcosUsados = null;
-            i = listaDeTablasDeProceso.length;
+            console.log("marcos " + listaDeTablasDeProceso[i].marcosUsados);
+            listaDeTablasDeProceso[i].marcosUsados = [];
+            i = listaDeTablasDeProceso.length ;
         }
     }
+    let ban = false;
     for(var i = 0; i < listaProcesos.length; i++){
         for(var j = 0; j < marcosEliminar.length; j++){
             if(listaProcesos[i].idMarco == marcosEliminar[j]){
                 listaProcesos[i].idProceso = null;
                 listaProcesos[i].disponible = true;
-                j = marcosEliminar.length;
+                j = marcosEliminar.length; 
+                ban = true;
+            }
+            if(j == marcosEliminar.length - 1){
+                console.log("Se elimino el proceso")
             }
         }
-        if(i == listaProcesos.length - 1){
-            console.log("Se elimino el proceso");
+        if(i == listaProcesos.length - 1 && !ban){
+            console.log("No se contro el proceso")
         }
     }
     actualizarTabla();
-    console.log(listaProcesos);
+    console.log(listaDeTablasDeProceso);
     pintado();
 }
 
@@ -315,7 +329,7 @@ function pintado(){
     ctx.clearRect(0, 0, 300, 700);
 
     for (let i = 0; i < listaProcesos.length; i++) {
-        ctx.strokeRect(0,(524288*i/(524288*32))*700,300,700/32);
+        ctx.strokeRect(0,(524288*i/(524288*31))*700,300,700/31);
 
         if(listaProcesos[i].idProceso != null){
             let colorPro=procesosNombre.find(function (element){
@@ -323,7 +337,7 @@ function pintado(){
             }).color;
             ctx.fillStyle = colorPro;
             
-            ctx.fillRect(0, (524288*i/(524288*32))*700, 300, (524288/(524288*32))*700);
+            ctx.fillRect(0, (524288*i/(524288*31))*700, 300, (524288/(524288*31))*700);
         }
         
     }
