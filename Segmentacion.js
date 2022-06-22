@@ -107,6 +107,8 @@ function insertaProceso(proceso){
         tablaSegmentos=copiaTablaSeg;
         tablaEspaciosL=copiaEspacios;
     }
+    actualizarTabla();
+    pintado();
 }
 //Función insertar Primer ajuste (Segmento)
 function insertarPrimer(proceso, segmento){
@@ -268,6 +270,8 @@ function insertarMejor(proceso, segmento){
             return false;
         }
     }
+    actualizarTabla();
+    pintado();
 }
 function copiarMemoria(){
     var copia=[];
@@ -348,7 +352,62 @@ function eliminar(proceso){
         }); //Se obtiene el proceso
     Proceso.num--;
     }
+    actualizarTabla();
+    pintado();
 }
+
+function actualizarTabla(){
+    var todo = "<tr><th>Item</th><th>Nombre Proceso</th><th>Tamaño</th><th>Dirección inicial partición</th><th>Dirección final partición</th></tr>"
+    const lista = document.getElementById("procEjec");
+    lista.innerHTML = todo;
+
+    // for (var i = 0; i < procesosMemoria.length; i++) {
+    //     if(procesosMemoria[i].Proceso != null){
+    //         var proceso = procesosNombre.find(function (element){
+    //             return element.id==procesosMemoria[i].Proceso;
+    //         });
+    //         lista.innerHTML += "<tr><td>"+proceso.id+"</td><td>"+proceso.name+"</td><td>"+proceso.memoria+"</td><td>"+procesosMemoria[i].DirIH+"</td><td>"+procesosMemoria[i].DirFH+"</td></tr>"    
+    //     }
+        
+    // }  
+}
+
+function pintado(){
+
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "green";
+    ctx.clearRect(0, 0, 300, 700);
+    // ctx.strokeRect(0,0,300,200);
+    // ctx.strokeRect(0,0,300,200);
+    let inicio=0;
+    console.log(procesosMemoria.length);
+    for (let i = 0; i < procesosMemoria.length; i++) {
+        ctx.strokeRect(0,inicio,300,(procesosMemoria[i].Tamaño)*(700/(16*1048576)));
+
+        if(procesosMemoria[i].Proceso != null){
+            // let MProceso=procesosNombre.find(function (element){
+            //     return element.name==procesosMemoria[i].Proceso;
+            // }).memoria;
+            // let colorPro=procesosNombre.find(function (element){
+            //     return element.name==procesosMemoria[i].Proceso;
+            // }).color;
+            // ctx.fillStyle = colorPro;
+            ctx.fillRect(0, inicio, 300, (procesosMemoria[i].Tamaño)*(700/(16*1048576)));
+        }
+
+        // ctx.fillRect(10, (listaProcesos[i].Tamanio/(1048575*16))*700, 100, 100);
+        inicio+=(procesosMemoria[i].Tamaño)*(700/(16*1048576))   
+    }
+    console.log(procesosMemoria);
+}
+
+window.onload = function(){
+    actualizarTabla();
+    pintado();
+    }
+
+
 
 insertaProceso(2);
 eliminar(2);
@@ -360,4 +419,4 @@ insertaProceso(5);
 console.log(procesosMemoria);
 console.log('Tabla de segmentos');
 console.log(tablaSegmentos);
-//Función compactar (Solo unir los espacios libres seguidos)
+// //Función compactar (Solo unir los espacios libres seguidos)
