@@ -204,7 +204,7 @@ listaDeTablasDeProceso = [
     {
         proceso: "SO",
         marcosUsados: [0,1],
-        paginas: 2,
+        paginas: [0,1],
     }
 ];
 
@@ -226,13 +226,13 @@ function insertarProceso(numeroP){
 
     let marcosDisponibles = 0;
     let cantidadDeMarcos = calcularPaginas(numeroP);
+    let numeroPaginas = [];
 
     for(var i = 0; i < listaProcesos.length; i++){
         if(listaProcesos[i].idProceso == null){
             marcosDisponibles++;
         }
     }
-    console.log("MARCOS DISPONIBLES " + marcosDisponibles);
     var ban = false;
     for(var i = 0; i < cantidadDeMarcos; i++){
         for(j = 0; j < listaProcesos.length; j++){
@@ -244,19 +244,24 @@ function insertarProceso(numeroP){
             }
         }      
         if(i == cantidadDeMarcos - 1 && !ban){
-            console.log("No se puede insertar el proceso, marcos insuficientes")
+            alert("No se puede insertar el proceso, marcos insuficientes")
         }
     }
+
+    for(var i = 0; i < cantidadDeMarcos; i++){
+        numeroPaginas.push(i);
+    }
+
     if(ban == true){
         listaDeTablasDeProceso.push({
             proceso : nombreProceso,
             marcosUsados : marcosUsados(numeroP),
-            paginas : calcularPaginas(numeroP)
+            paginas : numeroPaginas
         });
-        console.log("Se inserto el proceso");
+        alert("Se inserto el proceso");
     }
-    actualizarTabla();
-    console.log(listaDeTablasDeProceso);
+    // actualizarTabla();
+    actualizarTabla2();
     pintado();
 }
 
@@ -279,7 +284,7 @@ function eliminarProceso(numeroP){
     for(var i = 0; i < listaDeTablasDeProceso.length; i++){
         if(listaDeTablasDeProceso[i].proceso == idProceso && listaDeTablasDeProceso[i].marcosUsados.length > 0){
             marcosEliminar = listaDeTablasDeProceso[i].marcosUsados;
-            console.log("marcos " + listaDeTablasDeProceso[i].marcosUsados);
+            alert("marcos " + listaDeTablasDeProceso[i].marcosUsados);
             listaDeTablasDeProceso[i].marcosUsados = [];
             i = listaDeTablasDeProceso.length ;
         }
@@ -294,29 +299,45 @@ function eliminarProceso(numeroP){
                 ban = true;
             }
             if(j == marcosEliminar.length - 1){
-                console.log("Se elimino el proceso")
+                alert("Se elimino el proceso")
             }
         }
         if(i == listaProcesos.length - 1 && !ban){
-            console.log("No se contro el proceso")
+            alert("No se contro el proceso")
         }
     }
-    actualizarTabla();
-    console.log(listaDeTablasDeProceso);
+    // actualizarTabla();
+    actualizarTabla2();
     pintado();
 }
 
-function actualizarTabla(){
-    var todo = "<tr><th>Item</th><th>Nombre Proceso</th><th>Tamaño</th><th>Dirección inicial partición</th><th>Dirección final partición</th></tr>"
-    const lista = document.getElementById("procEjec");
+// function actualizarTabla(){
+//     var todo = "<tr><th>Marco</th><th>Nombre Proceso</th><th>Página del proceso</th></tr>"
+//     const lista = document.getElementById("procEjec");
+//     lista.innerHTML = todo;
+
+//     for (var i = 0; i < listaProcesos.length; i++) {
+//         if(listaProcesos[i].Proceso != null){
+//             var proceso = procesosNombre.find(function (element){
+//                 return element.id==listaProcesos[i].idProceso;
+//             });
+//             lista.innerHTML += "<tr><td>"+listaProcesos[i].idMarco+"</td><td>"+proceso.name+"</td><td>"+listaDeTablasDeProceso[i].marcosUsados+"</td></tr>"    
+//         }
+        
+//     }  
+// }
+
+function actualizarTabla2(){
+    var todo = "<tr><th>Página del proceso</th><th>Nombre Proceso</th><th>Marco</th></tr>"
+    const lista = document.getElementById("procEjec2");
     lista.innerHTML = todo;
 
-    for (var i = 0; i < listaProcesos.length; i++) {
-        if(listaProcesos[i].Proceso != null){
+    for (var i = 0; i < listaDeTablasDeProceso.length; i++) {
+        if(listaProcesos[i].idProceso != null){
             var proceso = procesosNombre.find(function (element){
-                return element.id==listaProcesos[i].Proceso;
+                return element.id==listaProcesos[i].idProceso;
             });
-            lista.innerHTML += "<tr><td>"+proceso.id+"</td><td>"+proceso.name+"</td><td>"+proceso.memoria+"</td><td>"+listaProcesos[i].DirInicial+"</td><td>"+listaProcesos[i].DirFinal+"</td></tr>"    
+            lista.innerHTML += "<tr><td>"+listaDeTablasDeProceso[i].paginas+"</td><td>"+listaDeTablasDeProceso[i].proceso+"</td><td>"+listaDeTablasDeProceso[i].marcosUsados+"</td></tr>"    
         }
         
     }  
@@ -344,7 +365,7 @@ function pintado(){
 }
 
 window.onload = function(){
-    actualizarTabla();
+    actualizarTabla2();
     pintado();
     }
 

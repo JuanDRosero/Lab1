@@ -25,6 +25,14 @@
                 <option value="3">Peor ajuste</option>
             </select>
         </div>
+        <table class="procesosEjec2" id="procEjec2">
+            <tr>
+                <th>Nombre Proceso</th>
+                <th>Segmento</th>
+                <th>Dirección inicial</th>
+                <th>Límite</th>
+            </tr>
+        </table>
     </div>
     <div class="dibujo" style="background-color: rgb(255, 255, 255);">
         <!-- <input type="button" value="Genera una tabla" onclick="dibujarTabla()"> -->
@@ -35,66 +43,102 @@
         <table class="programasTot">
             <tr>
                 <th>Nombre Programa</th>
-                <th>Tamaño</th>
+                <th>Stack</th>
+                <th>Heap</th>
+                <th>Bss</th>
+                <th>Data</th>
+                <th>Text</th>
                 <th>Seleccionar</th>
             </tr>
             <tr>
                 <td>NotePad</td>
-                <td>224649</td>
+                <td>178160</td>
+                <td>89080</td>
+                <td>44540</td>
+                <td>44540</td>
+                <td>534480</td>
                 <td><button name="button1" onclick="insertaProceso(2)">Ejecutar</button>
                     <button name="button1" onclick="eliminar(2)">Eliminar</button></td>
             </tr>
             <tr>
                 <td>Word</td>
-                <td>286708</td>
+                <td>195379</td>
+                <td>97690</td>
+                <td>48845</td>
+                <td>48845</td>
+                <td>586138</td>
                 <td><button name="button2" onclick="insertaProceso(3)">Ejecutar</button>
                     <button name="button1" onclick="eliminar(3)">Eliminar</button></td>
             </tr>
             <tr>
                 <td>Excel</td>
-                <td>309150</td>
+                <td>204800</td>
+                <td>102400</td>
+                <td>51200</td>
+                <td>51200</td>
+                <td>614400</td>
                 <td><button name="button3" onclick="insertaProceso(4)">Ejecutar</button>
                     <button name="button1" onclick="eliminar(4)">Eliminar</button></td>
             </tr>
             <tr>
                 <td>AutoCAD</td>
-                <td>436201</td>
+                <td>419430</td>
+                <td>209715</td>
+                <td>104858</td>
+                <td>104858</td>
+                <td>104858</td>
                 <td><button name="button4" onclick="insertaProceso(5)">Ejecutar</button>
                     <button name="button1" onclick="eliminar(5)">Eliminar</button></td>
             </tr>
             <tr>
                 <td>Calculadora</td>
-                <td>209462</td>
+                <td>87240</td>
+                <td>43620</td>
+                <td>21810</td>
+                <td>21810</td>
+                <td>261721</td>
                 <td><button name="button5" onclick="insertaProceso(6)">Ejecutar</button>
                     <button name="button1" onclick="eliminar(6)">Eliminar</button></td>
             </tr>
             <tr>
                 <td>Windows Defender</td>
-                <td>3996608</td>
+                <td>799322</td>
+                <td>399661</td>
+                <td>199830</td>
+                <td>199830</td>
+                <td>2397965</td>
                 <td><button name="button6" onclick="insertaProceso(7)">Ejecutar</button>
                     <button name="button1" onclick="eliminar(7)">Eliminar</button></td>
             </tr>
             <tr>
                 <td>PowerPoint</td>
-                <td>1785608</td>
+                <td>357122</td>
+                <td>178561</td>
+                <td>89280</td>
+                <td>89280</td>
+                <td>1071365</td>
                 <td><button name="button7" onclick="insertaProceso(8)">Ejecutar</button>
                     <button name="button1" onclick="eliminar(8)">Eliminar</button></td>
             </tr>
             <tr>
                 <td>Chrome</td>
-                <td>2696608</td>
+                <td>539322</td>
+                <td>269661</td>
+                <td>134830</td>
+                <td>134830</td>
+                <td>1617965</td>
                 <td><button name="button8" onclick="insertaProceso(9)">Ejecutar</button>
                     <button name="button1" onclick="eliminar(9)">Eliminar</button></td>
             </tr>
         </table>
         <table class="procesosEjec" id="procEjec">
-            <tr>
+            <!-- <tr>
                 <th>Item</th>
                 <th>Nombre Proceso</th>
                 <th>Tamaño</th>
                 <th>Dirección inicial partición</th>
                 <th>Dirección final partición</th>
-            </tr>
+            </tr> -->
         </table>
     </div>
 </body>

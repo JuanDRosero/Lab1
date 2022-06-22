@@ -110,6 +110,7 @@ procesosNombre = [
             tablaEspaciosL=copiaEspacios;
         }
         actualizarTabla();
+        actualizarTabla2();
         pintado();
     }
     //Función insertar Primer ajuste (Segmento)
@@ -279,8 +280,6 @@ procesosNombre = [
                 return false;
             }
         }
-        actualizarTabla();
-        pintado();
     }
     function copiarMemoria(){
         var copia=[];
@@ -363,6 +362,7 @@ procesosNombre = [
         Proceso.num--;
         }
         actualizarTabla();
+        actualizarTabla2();
         pintado();
     }
     
@@ -371,15 +371,24 @@ procesosNombre = [
         const lista = document.getElementById("procEjec");
         lista.innerHTML = todo;
     
-        // for (var i = 0; i < procesosMemoria.length; i++) {
-        //     if(procesosMemoria[i].Proceso != null){
-        //         var proceso = procesosNombre.find(function (element){
-        //             return element.id==procesosMemoria[i].Proceso;
-        //         });
-        //         lista.innerHTML += "<tr><td>"+proceso.id+"</td><td>"+proceso.name+"</td><td>"+proceso.memoria+"</td><td>"+procesosMemoria[i].DirIH+"</td><td>"+procesosMemoria[i].DirFH+"</td></tr>"    
-        //     }
-            
-        // }  
+        for (var i = 0; i < procesosMemoria.length; i++) {
+            if(procesosMemoria[i].Proceso != null){
+                var proceso = procesosNombre.find(function (element){
+                    return element.id==procesosMemoria[i].id;
+                });
+                lista.innerHTML += "<tr><td>"+proceso.id+"</td><td>"+procesosMemoria[i].Proceso+"</td><td>"+procesosMemoria[i].Tamaño+"</td><td>"+procesosMemoria[i].DirIH+"</td><td>"+procesosMemoria[i].DirFH+"</td></tr>"    
+            }
+        }  
+    }
+    // ProcesoID, Segmento, DirI, Limite
+    function actualizarTabla2(){
+        var todo = "<tr><th>Nombre Proceso</th><th>Segmento</th><th>Dirección inicial</th><th>Límite</th></tr>"
+        const lista = document.getElementById("procEjec2");
+        lista.innerHTML = todo;
+    
+        for (var i = 0; i < tablaSegmentos.length; i++) {
+            lista.innerHTML += "<tr><td>"+tablaSegmentos[i].ProcesoID+"</td><td>"+tablaSegmentos[i].Segmento+"</td><td>"+tablaSegmentos[i].DirI+"</td><td>"+tablaSegmentos[i].Limite+"</td></tr>" 
+        }  
     }
     
     function pintado(){
@@ -414,6 +423,7 @@ procesosNombre = [
     
     window.onload = function(){
         actualizarTabla();
+        actualizarTabla2();
         pintado();
         }
     
@@ -429,4 +439,4 @@ procesosNombre = [
     // console.log(procesosMemoria);
     // console.log('Tabla de segmentos');
     // console.log(tablaSegmentos);
-    // //Función compactar (Solo unir los espacios libres seguidos)
+    //Función compactar (Solo unir los espacios libres seguidos)
