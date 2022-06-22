@@ -63,6 +63,7 @@ function crearP(Id,NombreP,TamP){
         return true;
     }else{
         return false;
+        alert('No fue posible crear la particion')
     }
 }
 /*
@@ -103,8 +104,7 @@ function insertaProceso(proceso){
                 
         }
     }else{
-        //alert("No fue posible insertar el proceso "+Proceso.name);
-        console.log("No fue posible insertar el proceso "+Proceso.name)
+        alert("No fue posible insertar el proceso "+Proceso.name);
         procesos=copiaMemoria;
         tablaSegmentos=copiaTablaSeg;
         tablaEspaciosL=copiaEspacios;
@@ -157,7 +157,7 @@ function insertarPrimer(proceso, segmento){
                 Limite:procesosMemoria[procesosMemoria.length-1].Tamaño}); //Inserta el elemeto en la tabla de segmentos
                 return true;
         }else{
-            console.log("No fue posible insertar el segmento: "+segmento);
+            alert("No fue posible insertar el segmento: "+segmento);
             return false;
         }
     }
@@ -215,6 +215,7 @@ function insertarPeor(proceso, segmento){
                 Limite:procesosMemoria[procesosMemoria.length-1].Tamaño}); //Inserta el elemeto en la tabla de segmentos
                 return true;
         }else{
+            alert("No fue posible insertar el segmento: "+segmento);
             return false;
         }
     }
@@ -249,7 +250,7 @@ function insertarMejor(proceso, segmento){
     for(let i=0;i<procesosMemoria.length;i++){
         if(procesosMemoria[i].Proceso==null){
             if(procesosMemoria[i].Tamaño>=memoria){
-                if(procesosMemoria[i].Tamaño<procesosMemoria[Min]){
+                if(procesosMemoria[i].Tamaño<procesosMemoria[Min].Tamaño){
                     Min=i;
                 }
             }
@@ -272,6 +273,7 @@ function insertarMejor(proceso, segmento){
                 Limite:procesosMemoria[procesosMemoria.length-1].Tamaño}); //Inserta el elemeto en la tabla de segmentos
                 return true;
         }else{
+            alert("No fue posible insertar el segmento: "+segmento);
             return false;
         }
     }
