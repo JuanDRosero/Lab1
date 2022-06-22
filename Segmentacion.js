@@ -22,7 +22,8 @@ procesosNombre = [
 //variable que representa la RAM
 procesosMemoria= [    
     {
-    Proceso:"S.0",
+    id: 1,
+    Proceso:"SO",
     Tamaño:1048576,
     DirI:0,
     DirFin:1048575,
@@ -45,10 +46,11 @@ let tablaEspaciosL={
 }
 
 //Función para crear una partición
-function crearP(NombreP,TamP){
+function crearP(Id,NombreP,TamP){
     if(tablaEspaciosL.Tam>=TamP){   //Si hay suficiente espacio para meter el proceso
         procesosMemoria.push(
-            {   Proceso:NombreP,
+            {   id: Id,
+                Proceso:NombreP,
                 Tamaño:TamP,
                 DirI:tablaEspaciosL.DirI,
                 DirF:tablaEspaciosL.DirI+TamP,
@@ -83,8 +85,8 @@ function insertaProceso(proceso){
                     insertarPrimer(proceso,'Bss')&&insertarPrimer(proceso,'Data');
                 break;
             case "2":      //Mejor Ajuste
-                correcto=insertarMejor(Proceso,'Text')&& insertarMejor(Proceso,'Heap')&& insertarMejor(Proceso,'Stack')&&
-                 insertarMejor(Proceso,'Bss')&& insertarMejor(Proceso,'Data');
+                correcto=insertarMejor(proceso,'Text')&& insertarMejor(proceso,'Heap')&& insertarMejor(proceso,'Stack')&&
+                 insertarMejor(proceso,'Bss')&& insertarMejor(proceso,'Data');
                 break;
             case "3":      //PeorAjuste
                     correcto=insertarPeor(proceso,'Text')&& insertarPeor(proceso,'Heap')&& insertarPeor(proceso,'Stack')&&
@@ -139,6 +141,7 @@ function insertarPrimer(proceso, segmento){
     for(let i=0;i<procesosMemoria.length;i++){
         if(procesosMemoria[i].Proceso==null){
             if(procesosMemoria[i].Tamaño>=memoria){
+                procesosMemoria[i].id=proceso;
                 procesosMemoria[i].Proceso=NProceso;
                 correcto=true;
                 tablaSegmentos.push({ProcesoID:Proceso.id, Segmento:segmento, DirI:procesosMemoria[i].DirIH, 
@@ -149,7 +152,7 @@ function insertarPrimer(proceso, segmento){
     }
     //Si no se pudo insertar se crea una nueva partición
     if(!correcto){
-        if(crearP(NProceso,memoria)){
+        if(crearP(proceso,NProceso,memoria)){
             tablaSegmentos.push({ProcesoID:Proceso.id, Segmento:segmento, DirI:procesosMemoria[procesosMemoria.length-1].DirIH, 
                 Limite:procesosMemoria[procesosMemoria.length-1].Tamaño}); //Inserta el elemeto en la tabla de segmentos
                 return true;
@@ -198,6 +201,7 @@ function insertarPeor(proceso, segmento){
 
     //Se intenta insertar en los huecos de la ram
     if(Max!=0){
+        procesosMemoria[Max].id=proceso;
         procesosMemoria[Max].name=NProceso;
         correcto=true;
         tablaSegmentos.push({ProcesoID:Proceso.id, Segmento:segmento, DirI:procesosMemoria[Max].DirIH, 
@@ -206,7 +210,7 @@ function insertarPeor(proceso, segmento){
     }
     //Si no se pudo insertar se crea una nueva partición
     if(!correcto){
-        if(crearP(NProceso,memoria)){
+        if(crearP(proceso,NProceso,memoria)){
             tablaSegmentos.push({ProcesoID:Proceso.id, Segmento:segmento, DirI:procesosMemoria[procesosMemoria.length-1].DirIH, 
                 Limite:procesosMemoria[procesosMemoria.length-1].Tamaño}); //Inserta el elemeto en la tabla de segmentos
                 return true;
@@ -254,6 +258,7 @@ function insertarMejor(proceso, segmento){
 
     //Se intenta insertar en los huecos de la ram
     if(Min!=16777216){
+        procesosMemoria[Min].id=proceso;
         procesosMemoria[Min].name=NProceso;
         correcto=true;
         tablaSegmentos.push({ProcesoID:Proceso.id, Segmento:segmento, DirI:procesosMemoria[Min].DirIH, 
@@ -262,7 +267,7 @@ function insertarMejor(proceso, segmento){
     }
     //Si no se pudo insertar se crea una nueva partición
     if(!correcto){
-        if(crearP(NProceso,memoria)){
+        if(crearP(proceso,NProceso,memoria)){
             tablaSegmentos.push({ProcesoID:Proceso.id, Segmento:segmento, DirI:procesosMemoria[procesosMemoria.length-1].DirIH, 
                 Limite:procesosMemoria[procesosMemoria.length-1].Tamaño}); //Inserta el elemeto en la tabla de segmentos
                 return true;
@@ -340,6 +345,7 @@ function eliminar(proceso){
             dirI=tablaSegmentos[i].DirI;
             for(let k=0;k<procesosMemoria.length;k++){
                 if(procesosMemoria[k].DirIH==dirI){
+                    procesosMemoria[k].id=null;
                     procesosMemoria[k].Proceso=null;   //Se libera el espacio en memoria
                     i++;
                     break;
@@ -389,10 +395,10 @@ function pintado(){
             // let MProceso=procesosNombre.find(function (element){
             //     return element.name==procesosMemoria[i].Proceso;
             // }).memoria;
-            // let colorPro=procesosNombre.find(function (element){
-            //     return element.name==procesosMemoria[i].Proceso;
-            // }).color;
-            // ctx.fillStyle = colorPro;
+            let colorPro=procesosNombre.find(function (element){
+                return element.id==procesosMemoria[i].id;
+            }).color;
+            ctx.fillStyle = colorPro;
             ctx.fillRect(0, inicio, 300, (procesosMemoria[i].Tamaño)*(700/(16*1048576)));
         }
 
@@ -409,14 +415,14 @@ window.onload = function(){
 
 
 
-insertaProceso(2);
-eliminar(2);
-insertaProceso(3);
-insertaProceso(2);
-eliminar(3);
-insertaProceso(5);
+// insertaProceso(2);
+// eliminar(2);
+// insertaProceso(3);
+// insertaProceso(2);
+// eliminar(3);
+// insertaProceso(5);
 
-console.log(procesosMemoria);
-console.log('Tabla de segmentos');
-console.log(tablaSegmentos);
+// console.log(procesosMemoria);
+// console.log('Tabla de segmentos');
+// console.log(tablaSegmentos);
 // //Función compactar (Solo unir los espacios libres seguidos)
