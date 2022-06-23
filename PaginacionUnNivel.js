@@ -284,7 +284,6 @@ function eliminarProceso(numeroP){
     for(var i = 0; i < listaDeTablasDeProceso.length; i++){
         if(listaDeTablasDeProceso[i].proceso == idProceso && listaDeTablasDeProceso[i].marcosUsados.length > 0){
             marcosEliminar = listaDeTablasDeProceso[i].marcosUsados;
-            alert("marcos " + listaDeTablasDeProceso[i].marcosUsados);
             listaDeTablasDeProceso[i].marcosUsados = [];
             i = listaDeTablasDeProceso.length ;
         }
@@ -298,12 +297,12 @@ function eliminarProceso(numeroP){
                 j = marcosEliminar.length; 
                 ban = true;
             }
-            if(j == marcosEliminar.length - 1){
-                alert("Se elimino el proceso")
-            }
         }
         if(i == listaProcesos.length - 1 && !ban){
             alert("No se contro el proceso")
+        }
+        if(i == listaProcesos.length - 1 && ban){
+            alert("Se elimino el proceso")
         }
     }
     // actualizarTabla();
@@ -334,10 +333,9 @@ function actualizarTabla2(){
 
     for (var i = 0; i < listaDeTablasDeProceso.length; i++) {
         if(listaProcesos[i].idProceso != null){
-            var proceso = procesosNombre.find(function (element){
-                return element.id==listaProcesos[i].idProceso;
-            });
-            lista.innerHTML += "<tr><td>"+listaDeTablasDeProceso[i].paginas+"</td><td>"+listaDeTablasDeProceso[i].proceso+"</td><td>"+listaDeTablasDeProceso[i].marcosUsados+"</td></tr>"    
+            if(listaDeTablasDeProceso[i].marcosUsados.length > 0){
+                lista.innerHTML += "<tr><td>"+listaDeTablasDeProceso[i].paginas+"</td><td>"+listaDeTablasDeProceso[i].proceso+"</td><td>"+listaDeTablasDeProceso[i].marcosUsados+"</td></tr>"    
+            }
         }
         
     }  
